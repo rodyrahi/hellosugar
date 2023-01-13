@@ -1,144 +1,13 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Pricing App</title>
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
-        <link
-            href='https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap'
-            rel='stylesheet'>
-        <link
-            href='https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'
-            rel='stylesheet'>
-        <link
-            href='https://fonts.googleapis.com/css2?family=Raleway&display=swap'
-            rel='stylesheet'>
-        <link href='https://fonts.googleapis.com/css2?family=Lato&display=swap'
-            rel='stylesheet'>
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <style> @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Montserrat:wght@700&family=Rubik+Mono+One&display=swap'); </style>
-    </head>
+    <%- include('partials/header.ejs') %>
     <body>
         <style>
-            .card{
-                width: 16rem;
-                box-shadow: 0px 15px 20px #2b2b93;
-                margin-bottom: 2rem;
-            }
-            .header {
-                font-family: 'Rubik Mono One', sans-serif;
-            }
-            /* Custom background color */
-            body {
-                font-family: 'Lato', sans-serif;
-                background-color: #007bff;
-            }
-            /* Custom styling for the container */
-            .container {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-direction: column;
-               
-            }
-            /* Custom heading styles */
-            h1 {
-                
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-  
-
-                color: white;
-                text-shadow: 2px 2px 4px #4e4e4e;
-            }
-            /* Custom button styles */
-            .btn {
-                border-radius: 10px;
-                font-size: 0.9rem;
-                padding: 1rem;
-                letter-spacing: 2px;
-                text-transform: uppercase;
-                box-shadow: 2px 2px 4px #4e4e4e;
-                transition: all 0.2s ease-in-out;
-            }
-            /* Custom styles for the primary button */
-            .btn-primary {
-                background-color: rgb(255, 255, 255);
-                color: #434343;
-                margin-left: 1rem;
-                border: none;
-            }
-            /* Custom styles for the secondary button */
-            .btn-secondary {
-                background-color: #00a9fb;
-                color: white;
-               
-                border: none;
-            }
-            /* Custom styles for the button hover effect */
-            .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 4px 4px 8px #454545;
-            }
-            .card-header{
-                background-color: #00307b;
-                color: azure;
-            }
+            
+      
         </style>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class=" navbar-brand  header" href="#" style="color:
-                white; font-size: 1.5rem; ">
-                <img style="width: 8rem;" src="/sugaricon.png" alt=""
-                    srcset="">
-                </a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse justify-content-center " id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                  <% if(!isAuthenticated) { %>
-                    
-                  <a class="nav-link " aria-current="page" href="/login">LOGIN</a>
-                  <%} else {%>
-                    <a class="nav-link " aria-current="page" href="/logout">LOGOUT</a>
-                    <%}%>
-                  <a class="nav-link " href="/">FEATURES</a>
-                  <a class="nav-link " href="#pricing">PRICING</a>
-                  
-                </div>
-              </div>
-              
-            </div>
-          </nav>
-        <!-- <nav class="navbar navbar-expand-lg  ">
-            <div class="container-fluid justify-content-center">
-                <a class=" navbar-brand  header" href="#" style="color:
-                white; font-size: 1.5rem; ">
-                <img style="width: 10rem;" src="/sugaricon.png" alt=""
-                    srcset="">
-                </a>
-            
-                    
-               
-              </div>
-              <div class="d-flex" style="">
-                    
-                <a class="btn btn-primary" href="/logout">logout</a> 
-            </div>
-           
-            
-            
-              
-
-        </nav> -->
-
-
-
-
+       <%- include('partials/navbar.ejs') %>
+       
         <div class="container">
             <div class="text-center" style="margin: 5rem auto 5rem auto;">
 
@@ -148,8 +17,13 @@
                 <p class="text-white mb-5">Efficiently manage your WhatsApp
                     messages and automate your business communication</p>
                 <a href="#" class="btn btn-secondary">Learn More</a>
-                <a href="#pricing" id="pricing-link" class="btn btn-primary">Sign
-                    Up</a>
+                <% if(!isAuthenticated) { %>
+                                
+                    <a class="btn btn-primary " aria-current="page" href="#pricing">Sign up</a>
+                    <%} else {%>
+                       
+                      <a class="btn btn-primary" aria-current="page" href="#pricing">See Pricing</a>
+                      <%}%>
             </div>
         </div>
         <div class="container " id="pricing" style="margin: 0rem auto 10rem
@@ -168,14 +42,28 @@
                                     style="font-size: 5rem;"></i>
                             </div>
 
-                            <h5 class="card-title">$9.99/month</h5>
-                            <ul class="list-unstyled mt-3 mb-4">
+                            <div class="" style="display: block ruby;">
+                                <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">$19.99 </p>
+                                    <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
+
+                            </div>
+                            <h5 class="card-title ">   $9.99/month</h5>
+                            <ul class="list-unstyled mt-3 mb-4" style="  color: dimgray;">
                                 <li>20 users included <i class="fa-solid fa-check"></i> </li>
                                 <li>10 GB of storage <i class="fa-solid fa-check"></i></li>
                                 <li>Priority email support <i class="fa-solid fa-check"></i></li>
                                 <li>Help center access <i class="fa-solid fa-check"></i></li>
                               </ul>
-                            <button class="btn btn-primary">Sign up</button>
+                              <% if(!isAuthenticated) { %>
+                                
+                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                                <%} else {%>
+                                   
+                                    <a class="btn btn-primary" aria-current="page"  href="/basic">Choose</a>
+
+                              
+                                  <%}%>
+                            
                         </div>
                     </div>
                 </div>
@@ -198,6 +86,11 @@
                                     style="font-size: 5rem; "></i>
 
                             </div>
+                            <div class="" style="display: block ruby;">
+                                <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">$29.99 </p>
+                                    <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
+
+                            </div>
                             <h5 class="card-title">$19.99/month</h5>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>20 users included <i class="fa-solid fa-check"></i> </li>
@@ -207,19 +100,20 @@
                               </ul>
                         
             
-                            <button class="btn btn-primary">Sign up</button>
+                              <% if(!isAuthenticated) { %>
+                                
+                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                                <%} else {%>
+                                 
+                                  <a class="btn btn-primary" aria-current="page" href="/pro">Choose</a>
+                                  <%}%>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="card"
                     style="color: rgb(255, 255, 255);
-                        background-color: rgb(0, 0, 0);
-                       
-
-                       
-                        "
-                    >
+                        background-color: rgb(0, 0, 0);">
                         <div class="card-header">
                             Enterprise
                         </div>
@@ -230,25 +124,32 @@
                                 <i class="fa-sharp fa-solid fa-rocket"
                                     style="font-size: 5rem;"></i>
                             </div>
-                            <h5 class="card-title">$29.99/month</h5>
+                            <div class="" style="display: block ruby;">
+                                <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">$39.99 </p>
+                                    <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
+
+                            </div>
+                            <h5 class="card-title">   $29.99/month</h5>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>20 users included <i class="fa-solid fa-check"></i> </li>
                                 <li>10 GB of storage <i class="fa-solid fa-check"></i></li>
                                 <li>Priority email support <i class="fa-solid fa-check"></i></li>
                                 <li>Help center access <i class="fa-solid fa-check"></i></li>
                               </ul>
-                            <button class="btn btn-primary">Sign up</button>
+                              <% if(!isAuthenticated) { %>
+                                
+                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                                <%} else {%>
+                                  
+                                    <a class="btn btn-primary" aria-current="page" href="/enterprise">Choose</a>
+
+                                  
+                                  <%}%>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
-            $("#pricing-link").click(function() {
-    $('html, body').animate({
-        scrollTop: $("#pricing").offset().top
-    }, 2000);
-});
-        </script>
+
     </body>
 </html>

@@ -88,20 +88,53 @@
                 color: azure;
             }
         </style>
-        <nav class="navbar navbar-expand-lg d-flex justify-content-center">
-            <a class=" navbar-brand mx-auto header" href="#" style="color:
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class=" navbar-brand  header" href="#" style="color:
                 white; font-size: 1.5rem; ">
-                <img style="width: 12rem;" src="/sugaricon.png" alt=""
+                <img style="width: 8rem;" src="/sugaricon.png" alt=""
                     srcset="">
-            </a>
-            <button class="navbar-toggler mx-auto" type="button"
-                data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false"
-                aria-label="Toggle navigation">
+                </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+              </button>
+              <div class="collapse navbar-collapse justify-content-center " id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <% if(!isAuthenticated) { %>
+                    
+                  <a class="nav-link " aria-current="page" href="/login">LOGIN</a>
+                  <%} else {%>
+                    <a class="nav-link " aria-current="page" href="/logout">LOGOUT</a>
+                    <%}%>
+                  <a class="nav-link " href="/">FEATURES</a>
+                  <a class="nav-link " href="#pricing">PRICING</a>
+                  
+                </div>
+              </div>
+              
+            </div>
+          </nav>
+        <!-- <nav class="navbar navbar-expand-lg  ">
+            <div class="container-fluid justify-content-center">
+                <a class=" navbar-brand  header" href="#" style="color:
+                white; font-size: 1.5rem; ">
+                <img style="width: 10rem;" src="/sugaricon.png" alt=""
+                    srcset="">
+                </a>
+            
+                    
+               
+              </div>
+              <div class="d-flex" style="">
+                    
+                <a class="btn btn-primary" href="/logout">logout</a> 
+            </div>
+           
+            
+            
+              
 
-        </nav>
+        </nav> -->
 
 
 

@@ -9,9 +9,12 @@
        <%- include('partials/navbar.ejs') %>
        
         <div class="container">
+            <!-- <h1><%= user%></h1> -->
+           
+        
             <div class="text-center" style="margin: 5rem auto 5rem auto;">
 
-                <img style="width: 12rem;" src="/sugarface.png" alt=""
+                <img class="" style="width: 12rem;" src="/sugarface.png" alt=""
                     srcset="">
                 <h1 class="mb-5 text-uppercase">WhatsApp Automation Tool</h1>
                 <p class="text-white mb-5">Efficiently manage your WhatsApp
@@ -31,6 +34,40 @@
             <h1 class="text-center" style="margin-bottom: 6rem; ">PRICING <i
                     class="fa-solid fa-arrow-down"></i></h1>
             <div class="row">
+                <!-- <div class="col-sm-3">
+                    <div class="card" style="color: white;">
+                        <div class="card-header">
+                            Basic
+                        </div>
+                        <div class="card-body " style="background-color: darkgrey;">
+                            
+                            <div class=" text-center m-3 ">
+                                <i class="fa-solid fa-car-side" style="font-size: 5rem;"></i>
+                               
+                            </div>
+
+                            <h5 class="card-title ">FREE</h5>
+                            <p class=" m-0 " style="font-size: 1.5rem; color: darkcyan;">2 MONTHS</p>
+
+                            <ul class="list-unstyled mt-3 mb-4" style="">
+                                <li>20 users included <i class="fa-solid fa-check"></i> </li>
+                                <li>10 GB of storage <i class="fa-solid fa-check"></i></li>
+                                <li>Priority email support <i class="fa-solid fa-check"></i></li>
+                                <li>Help center access <i class="fa-solid fa-check"></i></li>
+                              </ul>
+                              <% if(!isAuthenticated) { %>
+                                
+                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                                <%} else {%>
+                                   
+                                    <a class="btn btn-primary" aria-current="page"  href="/basic">Choose</a>
+
+                              
+                                  <%}%>
+                            
+                        </div>
+                    </div>
+                </div> -->
                 <div class="col-sm-4">
                     <div class="card" style="color: darkcyan;">
                         <div class="card-header">
@@ -112,7 +149,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="card"
-                    style="color: rgb(255, 255, 255);
+                    style="color: gold;
                         background-color: rgb(0, 0, 0);">
                         <div class="card-header">
                             Enterprise

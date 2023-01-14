@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('partials/header.ejs') %>
+    <body>
+        <%- include('partials/navbar.ejs') %>
+        <% if(!isAuthenticated) { %>
+
+        <a class="btn btn-primary " aria-current="page"href="#pricing">Sign up</a>
+        <%} else {%>
+        <div class="container" style="height: 42rem;">
+            <i class="fa-solid fa-heart" style="font-size: 10rem; color: hotpink;"></i>
+            <h1>THANK YOU VERY MUCH , <%= name %></h1>
+                <p class="text-white">YOU WILL BEE CONTACTED VERY SOON !!!</p>
+
+        </div>
+        <%}%>
+    </body>
+</html>

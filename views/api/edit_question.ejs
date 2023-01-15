@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUGAR</title>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" crossorigin="anonymous"></script>
+<script>"https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.min.js"
+</script>
+
+<script>
+  "https://cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.2.8/EventEmitter.js"
+</script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+<body>
+  <div style="display: flex;">
+
+
+ 
+    <% for(var i=0 ; i <data2.length; i++) { %>
+
+
+
+ 
+        
+     
+      <div class="card m-1" style="width: 10rem;">
+        <div class="card-body">
+          <p><%= Object.values(data2[i])[2] %></p>
+          <p class="card-title"><%= Object.values(data2[i])[0] %></p>
+            <p class="card-text" style="font-size: 0.8rem;"><%= Object.values(data2[i])[1] %></p>
+              <a href="dasboard/edit/<%= Object.values(data2[i])[0]%>" class="card-link">Edit</a>
+              <a href="#" class="card-link">Delete</a>
+            </div>
+          </div>
+      
+          <% } %>
+   
+          </div>
+  
+
+
+
+  <div class="" id="button_collapse">
+
+
+
+    <form method="POST" action="dasboard/edit/<%=Object.values(data[0])[1] %> ">
+      <div class="m-3">
+        <div class="mb-3">
+          <label>isfirst </label>
+          <input type="text" name="isfirst" id="isfirst" class="form-control" value="<%=Object.values(data[0])[12] %>"/>
+          <label>Question Name </label>
+          <input type="text" name="name" id="name" class="form-control" value="<%=Object.values(data[0])[1] %>" />
+        </div>
+        <div class="mb-3">
+          <label>Message Title</label>
+          <input type="text" rows="3" name="tittle" id="tittle" class="form-control" value="<%=Object.values(data[0])[3] %>" />
+          <label>Message Body</label>
+          <textarea type="text" rows="3" name="message" id="message" class="form-control" ><%=Object.values(data[0])[2] %></textarea>
+          <label>Message Footer</label>
+          <input type="text" rows="3" name="footer" id="footer" class="form-control" value="<%=Object.values(data[0])[4] %>" />
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text">Option 1 :</span>
+          <input type="text" name="op1" id="op1" class="form-control" value="<%=Object.values(data[0])[5] %>"/>
+          <span class="input-group-text">Question</span>
+          <input type="text" name="op1_q" id="op1_q" class="form-control" value="<%=Object.values(data[0])[8] %>"/>
+
+          <span class="input-group-text">Option 2 :</span>
+          <input type="text" name="op2" id="op2" class="form-control" value="<%=Object.values(data[0])[6] %>" />
+          <span class="input-group-text">Question</span>
+          <input type="text" name="op2_q" id="op2_q" class="form-control" value="<%=Object.values(data[0])[9] %>"/>
+          <span class="input-group-text">Option 3 :</span>
+          <input type="text" name="op3" id="op3" class="form-control"value="<%=Object.values(data[0])[7] %>" />
+          <span class="input-group-text">Question</span>
+          <input type="text" name="op3_q" id="op3_q" class="form-control"value="<%=Object.values(data[0])[10] %>" />
+          <span class="input-group-text">Type</span>
+          <input type="text" name="type" id="type" class="form-control"value="<%=Object.values(data[0])[13] %>" />
+        
+        </div>
+
+
+        <div class="mb-3">
+          <input type="submit" name="submit_button" class="btn btn-primary" value="update" />
+        </div>
+    </form>
+  </div>
+ 
+  <script>
+
+    // const qrcode = require('qrcode');
+
+
+    // var emitter = EventEmitter();
+    // emitter.on('qr_ready' , function(qr) {
+
+    // })
+
+
+
+
+  </script>
+</body>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</html>

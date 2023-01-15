@@ -1,18 +1,15 @@
-var basecon = require("../database.js");
-var con = require("../apidatabase.js");
-
-const { localsName } = require("ejs");
-const express = require("express");
-const http = require("http");
-const app = express();
+var express = require("express");
+// const http = require("http");
+var con = require("./apidatabase.js");
 var router = express.Router();
 const socketIO = require("socket.io");
-const server = http.createServer(app);
+// const server = http.createServer(app);
 // const port = process.env.PORT || 8000;
 const io = socketIO(server);
 // app.use(express.urlencoded());
 var bot_ready = false
 const { Client, LocalAuth, MessageMedia, Buttons } = require("whatsapp-web.js");
+const router = express.Router()
 const client = new Client({
   restartOnAuthFail: true,
   puppeteer: {
@@ -55,7 +52,7 @@ router.get("dashboard/edit/:name", function (req, res, next) {
       "SELECT name, message FROM questions WHERE user=?",
       ["raj"],
       function (err, result, fields) {
-        res.render("api/edit_question", { data: rows , data2: result });
+        res.render("edit_question", { data: rows , data2: result });
 
 
       }
@@ -102,6 +99,7 @@ router.post("dashboard/edit/:name", function (req, res) {
 
 });
 
+
 router.post("dashboard/add", function (req, res) {
   let data = req.body;
   insert_questions(data.name,data.question,data.question_title,data.question_footer,data.op1,data.op2,data.op3,data.op1_q,data.op2_q,data.op3_q,"raj",data.isfirst);
@@ -144,111 +142,8 @@ io.on("connection", function (socket) {
   });
 });
 
-
+server.listen(port, function () {
+  console.log("App running on *: " + port);
+});
 
 module.exports = { router, io, client };
-router.get("/", (req, res) => {
-    console.log(req.oidc.isAuthenticated())
-    res.render("index", { 
-        title: "My Express App" ,
-        user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-        isAuthenticated : req.oidc.isAuthenticated()
-    });
-});
-router.get("/basic", (req, res) => {
-    const plan= "Basic";
-    console.log(plan);
-    res.render("plans", { 
-        plan : plan,
-        user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-
-        isAuthenticated : req.oidc.isAuthenticated()
-    });
-});
-router.get("/pro", (req, res) => {
-    const plan= "Pro";
-    console.log(plan);
-    res.render("plans", { 
-        plan : plan,
-        user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-
-        isAuthenticated : req.oidc.isAuthenticated()
-    });
-});
-router.get("/enterprise", (req, res) => {
-    const plan= "Enterprise";
-    console.log(plan);
-    res.render("plans", { 
-        plan : plan,
-        user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-        isAuthenticated : req.oidc.isAuthenticated()
-    });
-});
-router.post("/basic", (req, res) => {
-    console.log(req.body);
-  const {name , number , mail , business  , city } = req.body;
-  const type = "basic"
-  var sql =
-    "INSERT INTO client (name , number , mail , business , type , city) VALUES ?";
-  var values = [
-    [name , number , mail , business , type , city,],
-  ];
-  basecon.query(sql, [values], function (err, result) {
-    if (err) throw err;
-    console.log("Number of records inserted: " + result.affectedRows);
-  });
-   res.render('registered' , {
-    name: name,
-    user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-    isAuthenticated : req.oidc.isAuthenticated()
-   })
-});
-router.post("/pro", (req, res) => {
-  console.log(req.body);
-const {name , number , mail , business  , city } = req.body;
-const type = "pro"
-var sql =
-  "INSERT INTO client (name , number , mail , business , type , city) VALUES ?";
-var values = [
-  [name , number , mail , business , type , city,],
-];
-basecon.query(sql, [values], function (err, result) {
-  if (err) throw err;
-  console.log("Number of records inserted: " + result.affectedRows);
-});
- res.render('registered' , {
-  name: name,
-  user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-  isAuthenticated : req.oidc.isAuthenticated()
- })
-});
-router.post("/enterprise", (req, res) => {
-  console.log(req.body);
-const {name , number , mail , business  , city } = req.body;
-const type = "enterprise"
-var sql =
-  "INSERT INTO client (name , number , mail , business , type , city) VALUES ?";
-var values = [
-  [name , number , mail , business , type , city,],
-];
-basecon.query(sql, [values], function (err, result) {
-  if (err) throw err;
-  console.log("Number of records inserted: " + result.affectedRows);
-});
- res.render('registered' , {
-  name: name,
-  user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-  isAuthenticated : req.oidc.isAuthenticated()
- })
-});
-router.get("/dashboard", (req, res) => {
-  con.query(
-    "SELECT name, message FROM questions WHERE user=?",
-    ["raj"],
-    function (err, result, fields) {
-      res.render("api/api", { data: result });
-    }
-  );
-});
-
-module.exports = router

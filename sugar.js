@@ -1,8 +1,25 @@
 const express = require("express");
 const app = express();
 const indexRouter = require("./routes/index.js")
+const dashboardRouter = require("./routes/dashboard.js")
+
 const { auth, requiresAuth } = require("express-openid-connect");
 require("dotenv").config();
+
+
+
+const http = require('http');
+const socketIO = require("socket.io");
+const server = http.createServer(app);
+const io = socketIO(server);
+
+const bot_ready = false
+
+io.on('connection', (socket) => {
+  
+  console.log("redy");
+
+});
 
 
 
@@ -24,7 +41,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(auth(config))
 
 app.use('/' , indexRouter);
-
+app.use('/dashboard' , dashboardRouter);
 
 app.get("/profile", requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));
@@ -35,3 +52,5 @@ app.get("/profile", requiresAuth(), (req, res) => {
 app.listen(5000, () => {
   console.log("Server listening on port 5000");
 });
+
+

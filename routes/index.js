@@ -18,11 +18,21 @@ var bot_ready = false
 // module.exports = { router, io, client };
 router.get("/", (req, res) => {
     console.log(req.oidc.isAuthenticated())
-    res.render("index", { 
+    if (req.oidc.isAuthenticated()) {
+      res.render("index", { 
         title: "My Express App" ,
-        user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
+         user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
         isAuthenticated : req.oidc.isAuthenticated()
     });
+    }
+    else{
+      res.render("index", { 
+        title: "My Express App" ,
+        //  user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
+        isAuthenticated : req.oidc.isAuthenticated()
+    });
+    }
+ 
 });
 router.get("/basic", (req, res) => {
     const plan= "Basic";

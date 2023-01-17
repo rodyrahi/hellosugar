@@ -1,35 +1,14 @@
 var con = require("../apidatabase.js");
 const express = require('express');
 var router = express.Router();
-const app = express();
 const http = require('http');
-const socketIO = require("socket.io");
-const server = http.createServer(app);
-const io = socketIO(server);
+var socketIO = require("socket.io");
+var app = express();
+var server = http.createServer(app);
+var io = socketIO(server);
 
 const bot_ready = false
 
-io.on('connection', (socket) => {
-  
-  console.log("redy");
-  if (bot_ready) {
-    socket.emit("ready", "Hii bot is ready");
-
-  }
-  client.on("qr", (qr) => {
-    io.emit('qr', qr);
-    console.log("QR RECEIVED", qr);
-    console.log(qr);
-    socket.emit("qr", qr);
-  });
-
-  client.on("ready", () => {
-    bot_ready = true
-    socket.emit("ready", "Hii bot is ready");
-    console.log("Client is ready!");
-  });
-  console.log('a user connected');
-});
 
 
 
@@ -55,6 +34,32 @@ const client = new Client({
 });
 
 client.initialize();
+
+
+if (io instanceof require('socket.io')) {
+  console.log('io is an instance of socket.io');
+} else {
+  console.log('io is not an instance of socket.io');
+}
+if (bot_ready) {
+  io.emit("ready", "Hii bot is ready");
+
+}
+
+
+
+
+client.on("qr", (qr) => {
+  io.emit('qr', qr);
+  console.log("QR RECEIVED", qr);
+
+});
+
+client.on("ready", () => {
+  bot_ready = true
+  io.emit("ready", "Hii bot is ready");
+  console.log("Client is ready!");
+});
 
 
 
@@ -96,10 +101,7 @@ router.get("/get", function (req, res, next) {
 
 router.post("/edit/:name", function (req, res) {
   console.log("this");
-    // const { signature,email, password } = req.body
-    // db.query('UPDATE usergooglepassword SET signature=?,email=?,password=? WHERE id=?',
-    //     [signature,email, password, req.params.id], (err, rows) => {
-    // const { signature, email, password } = req.body;
+
     console.log(req.body);
     const {name,tittle,message,footer,op1,op2,op3,op1_q,op2_q, op3_q,isfirst,type} = req.body;
     const nameq = req.params.name
@@ -147,8 +149,12 @@ function insert_questions( name,tittle,message,footer,op1,op2,op3,op1_q,op2_q,op
 
 router.get("/", (req, res) => {
   
-
-
+  var io = req.app.get('socketio');
+  io.on('connect', function() {
+    console.log("Connected to WS server");
+    io.emit("qr", "test2");
+  
+  });
   con.query(
     "SELECT name, message FROM questions WHERE user=?",
     ["raj"],
@@ -156,6 +162,15 @@ router.get("/", (req, res) => {
       res.render("api/api", { data: result });
     }
   );
+});
+router.post("/", (req, res) => {
+  
+  var io = req.app.get('socketio');
+  io.on('connect', function() {
+    console.log("Connected to WS server");
+    io.emit("qr", "test2");
+  
+  });
 });
 
 

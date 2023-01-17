@@ -81,6 +81,7 @@ router.post("/basic", (req, res) => {
     user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
     isAuthenticated : req.oidc.isAuthenticated()
    })
+ 
 });
 router.post("/pro", (req, res) => {
   console.log(req.body);
@@ -95,7 +96,7 @@ basecon.query(sql, [values], function (err, result) {
   if (err) throw err;
   console.log("Number of records inserted: " + result.affectedRows);
 });
- res.render('registered' , {
+res.render('registered' , {
   name: name,
   user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
   isAuthenticated : req.oidc.isAuthenticated()
@@ -104,7 +105,7 @@ basecon.query(sql, [values], function (err, result) {
 router.post("/enterprise", (req, res) => {
   console.log(req.body);
 const {name , number , mail , business  , city } = req.body;
-const type = "enterprise"
+var type = "enterprise"
 var sql =
   "INSERT INTO client (name , number , mail , business , type , city) VALUES ?";
 var values = [
@@ -114,11 +115,14 @@ basecon.query(sql, [values], function (err, result) {
   if (err) throw err;
   console.log("Number of records inserted: " + result.affectedRows);
 });
- res.render('registered' , {
+res.render('registered' , {
   name: name,
   user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
   isAuthenticated : req.oidc.isAuthenticated()
  })
 });
+
+
+
 
 module.exports = router

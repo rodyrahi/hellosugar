@@ -32,9 +32,10 @@
 
 
   <body>
-    <div class="d-flex justify-content-center m-3">
+    <div class="d-flex justify-content-center m-3" id="div1">
       <h3 id="ready">Connecting </h3>
-      <div id="qr-code"></div>
+  
+      
       <div class="m-3" id="qrcode"></div>
     </div>
 
@@ -52,7 +53,7 @@
                 <div class="card-body" style="padding: 0.5rem;">
                   <p class="card-title"><%= Object.values(data[i])[0] %></p>
                     <p class="card-text text-truncate" style="font-size: 0.8rem;"><%= Object.values(data[i])[1] %></p>
-                      <a href="/edit/<%= Object.values(data[i])[0]%>" class="card-link">Edit</a>
+                      <a href="<%=user%>/edit/<%= Object.values(data[i])[0]%>" class="card-link">Edit</a>
                       <a href="#" class="card-link">Delete</a>
                     </div>
                   </div>
@@ -229,12 +230,22 @@
     var socket = io();
     var code;
     console.log(socket);
+
+    
     socket.on('qr', function(data) {
+      const elmnt = document.getElementById("qrcode"); 
+      if (elmnt != null ) {
+        elmnt.remove();
+      }
+      
+      const d = document.createElement("div");
+      const element = document.getElementById("div1");
+      element.appendChild(d);
       console.log(data);
       code = data
       code = code.trim();
       code = code.padEnd(220);
-      new QRCode(document.getElementById("qrcode"), code)
+      new QRCode(d, code)
     });
 
     socket.on('tx', function(data) {

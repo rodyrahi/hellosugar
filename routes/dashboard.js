@@ -1,7 +1,6 @@
 var con = require("../apidatabase.js");
 const express = require("express");
 const http = require("http");
-
 const app = express();
 var router = express.Router();
 const socketIO = require("socket.io");

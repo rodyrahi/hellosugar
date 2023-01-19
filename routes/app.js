@@ -8,6 +8,8 @@ var server = http.createServer(app);
 var io = socketIO(server);
 var bot_ready = false
 
+var user = ""
+
 //============================================================================================================
 
 const { Client, LocalAuth, MessageMedia, Buttons } = require("whatsapp-web.js");
@@ -102,16 +104,25 @@ router.post("/edit/:name", function (req, res) {
 });
 
 router.post("/add", function (req, res) {
+  
   let data = req.body;
-  insert_questions(data.name,data.question,data.question_title,data.question_footer,data.op1,data.op2,data.op3,data.op1_q,data.op2_q,data.op3_q,"raj",data.isfirst);
+  insert_questions(data.name,data.question,data.question_title,data.question_footer,data.op1,data.op2,data.op3,data.op1_q,data.op2_q,data.op3_q,user,data.isfirst);
   console.log(data);
   res.redirect("/");
 
 });
 
 router.get("/", (req, res) => {
-  
+
+
+  user =  JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
+
+
+    user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
+  console.log(user);
+
   var io = req.app.get('socketio');
+
   io.on('connect', function() {
     console.log("Connected to WS server");
     io.emit("ok", "ok");
@@ -133,16 +144,26 @@ router.get("/", (req, res) => {
     });
   
   });
+  // con.query(
+  //   `SELECT name, message FROM questions WHERE user=${user}`,
+  //   function (err, result, fields) {
+  //     res.render("api/api", { 
+  //       data: result,
+  //       user: JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
+  //     });
+  //   });
   con.query(
     "SELECT name, message FROM questions WHERE user=?",
-    ["raj"],
+    [user],
     function (err, result, fields) {
       res.render("api/api", { 
-        data: result,
+        data: result ,
         user: JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
       });
     }
   );
+
+
 });
 router.post("/", (req, res) => {
   
@@ -235,7 +256,7 @@ async function send_input(element, msg) {
 }
 async function next_message(q, msg) {
   con.query(
-    `SELECT * FROM questions WHERE name="${q}" AND user='raj'`,
+    `SELECT * FROM questions WHERE name="${q}" AND user=${user}`,
     async function (err, element, fields) {
       console.log(element[0]["type"]);
       if (element[0]["type"] === "file") {
@@ -251,7 +272,7 @@ async function next_message(q, msg) {
 }
 async function send_message(q, msg) {
   con.query(
-    `SELECT * FROM questions WHERE name="${q}" AND user='raj'`,
+    `SELECT * FROM questions WHERE name="${q}" AND user=${user}`,
     async function (err, element, fields) {
 
       if (element[0]["type"] === "file") {
@@ -273,7 +294,7 @@ async function send_message(q, msg) {
 client.on("message", async (msg) => {
   console.log("MESSAGE RECEIVED", msg.body);
   let found_question = false;
-  var sql = "SELECT* FROM questions WHERE user='raj'";
+  var sql = `SELECT* FROM questions WHERE user=${user}`;
 
   con.query(sql, function (err, results) {
     if (err) throw err;

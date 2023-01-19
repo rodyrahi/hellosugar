@@ -14,16 +14,6 @@ const userRouter = require("../routes/app.js")
 
 router.use("/:user",userRouter)
 
-router.get("/", (req, res) => {
-    con.query(
-      "SELECT name, message FROM questions WHERE user=?",
-      ["raj"],
-      function (err, result, fields) {
-        res.render("api/api", { data: result });
-      }
-    );
-  });
-
 
 
 

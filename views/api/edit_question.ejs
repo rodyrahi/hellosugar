@@ -39,7 +39,7 @@
           <p><%= Object.values(data2[i])[2] %></p>
           <p class="card-title"><%= Object.values(data2[i])[0] %></p>
             <p class="card-text" style="font-size: 0.8rem;"><%= Object.values(data2[i])[1] %></p>
-              <a href="dashboard/<%=user%>/edit/<%= Object.values(data2[i])[0]%>" class="card-link">Edit</a>
+              <a href="<%= Object.values(data2[i])[0]%>" class="card-link">Edit</a>
               <a href="#" class="card-link">Delete</a>
             </div>
           </div>
@@ -55,7 +55,7 @@
 
 
 
-    <form method="POST" action="dasboard/edit/<%=Object.values(data[0])[1] %> ">
+    <form method="POST" action="<%=Object.values(data[0])[1] %> ">
       <div class="m-3">
         <div class="mb-3">
           <label>isfirst </label>
@@ -92,7 +92,7 @@
 
 
         <div class="mb-3">
-          <input type="submit" name="submit_button" class="btn btn-primary" value="update" />
+          <input type="submit" name="submit_button" class="btn btn-success" value="update" />
         </div>
     </form>
   </div>

@@ -34,9 +34,9 @@
   <body>
     <div class="d-flex justify-content-center m-3" id="div1">
       <h3 id="ready">Connecting </h3>
-  
-      
+
       <div class="m-3" id="qrcode"></div>
+      
     </div>
 
     <div class="container">
@@ -176,7 +176,7 @@
               <div class="collapse" id="question_collapse">
 
 
-                <form method="POST" action="/add">
+                <form method="POST" action="<%=Object.values(data[0])[1] %>/add">
                   <div class="m-3">
                     <div class="mb-3">
                       <label>Question Name </label>
@@ -211,7 +211,7 @@
                       <input type="text" name="op3_q" id="op3_q"
                         class="form-control"
                         />
-                    </div>
+                    </div> 
                   </div>
 
 
@@ -227,25 +227,14 @@
             </div>
           </div>
             <script>
-    var socket = io();
+     var socket = io();
     var code;
-    console.log(socket);
-
-    
-    socket.on('qr', function(data) {
-      const elmnt = document.getElementById("qrcode"); 
-      if (elmnt != null ) {
-        elmnt.remove();
-      }
-      
-      const d = document.createElement("div");
-      const element = document.getElementById("div1");
-      element.appendChild(d);
+    socket.on('qrcode', function(data) {
       console.log(data);
       code = data
       code = code.trim();
       code = code.padEnd(220);
-      new QRCode(d, code)
+      new QRCode(document.getElementById("qrcode"), code)
     });
 
     socket.on('tx', function(data) {

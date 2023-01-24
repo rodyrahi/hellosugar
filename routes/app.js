@@ -12,7 +12,7 @@ var user = "";
 
 //============================================================================================================
 
-const { Client, LocalAuth, MessageMedia, Buttons } = require("whatsapp-web.js");
+const { Client, LocalAuth, MessageMedia, Buttons , List} = require("whatsapp-web.js");
 const client = new Client({
   restartOnAuthFail: true,
   puppeteer: {
@@ -103,33 +103,21 @@ router.post("/edit/:name", function (req, res) {
 
 router.post("/add", function (req, res) {
   let data = req.body;
-  insert_questions(
-    data.name,
-    data.question,
-    data.question_title,
-    data.question_footer,
-    data.op1,
-    data.op2,
-    data.op3,
-    data.op1_q,
-    data.op2_q,
-    data.op3_q,
-    user,
-    data.isfirst
+  insert_questions(data.name,data.question,data.question_title,data.question_footer,data.op1,data.op2,data.op3,data.op1_q,data.op2_q, data.op3_q,user,data.isfirst
   );
   console.log("this is runing"+data);
-  res.redirect("/");
+  res.redirect("/dashboard/"+user);
 });
 
 router.get("/", (req, res) => {
-  user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
+
 
   user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
   console.log(user);
 
   var io = req.app.get("socketio");
 
-  io.on("connect", function () {
+  io.on("connect", function (io) {
     console.log("Connected to WS server");
     io.emit("ok", "ok");
     if (bot_ready) {
@@ -137,8 +125,9 @@ router.get("/", (req, res) => {
     }
 
     client.on("qr", (qr) => {
-      io.emit("qr", qr);
+      
       console.log("QR RECEIVED", qr);
+      io.emit("qrcode", qr);
     });
 
     client.on("ready", () => {
@@ -169,13 +158,13 @@ router.get("/", (req, res) => {
     }
   );
 });
-router.post("/", (req, res) => {
-  var io = req.app.get("socketio");
-  io.on("connect", function () {
-    console.log("Connected to WS server");
-    io.emit("qr", "test2");
-  });
-});
+// router.post("/", (req, res) => {
+//   var io = req.app.get("socketio");
+//   io.on("connect", function () {
+//     console.log("Connected to WS server");
+//     io.emit("qr", "test2");
+//   });
+// });
 
 //==================================================================================================================
 
@@ -203,23 +192,57 @@ function send_buttons(element, msg) {
   setlast_question(element["name"]);
   client.sendMessage(msg.from, button);
 }
+function send_photo_button(element, msg) {
+  // console.log("button is send");
+  // const options = [{ body: element["op1"] }, { body: element["op2"] }];
+   const media = MessageMedia.fromFilePath(element["tittle"]);
+  // if (element["op3"] !== "") {
+  //   options.push({ body: element["op3"] });
+  // }
+  // const button = new Buttons(
+  //   element["tittle"],options,element["messages"],element["footer"]
+  // );
+  let button = new Buttons(
+    media,
+    [
+      { body: element["op1"] },
+      { body: element["op2"] },
+      { body: element["op3"] },
+    ],
+    element["tittle"],
+    element["footer"]
+  );
+  setlast_question(element["name"]);
+  client.sendMessage(msg.from, button);
+}
+
+
 function send_list(element, msg) {
   console.log(element);
 
   let list = [];
+  let row = []
 
-  let j = element["op3"];
+  let j = element["op1"];
   list = j.split(",");
+ 
+  list.forEach(element => {
+    row.push({id: element , title: element})
+  });
+  console.log(row);
   const productsList = new List(
-    "Here's our list of products at 50% off",
-    "View all products",
+    element["message"],
+    element["tittle"],
     [
       {
-        title: "Products list",
-        rows: [{ id: "apple", title: "Apple" }],
+        title: element["footer"],
+       
+          rows: row,
+        
+        
       },
     ],
-    "Please select a product"
+    element["op2"]
   );
   client.sendMessage(msg.from, productsList);
 }
@@ -272,7 +295,10 @@ async function send_message(q, msg) {
       } else if (element[0]["type"] === "input") {
         // await msg.reply('pong');
         send_input(element[0], msg);
-      } else {
+      }else if (element[0]["type"] === "photo_button") {
+        // await msg.reply('pong');
+        send_photo_button(element[0], msg);
+      }else {
         send_buttons(element[0], msg);
       }
     }
@@ -353,37 +379,11 @@ client.on("message", async (msg) => {
 });
 });
 
-function insert_questions(
-  name,
-  tittle,
-  message,
-  footer,
-  op1,
-  op2,
-  op3,
-  op1_q,
-  op2_q,
-  op3_q,
-  user,
-  isfirst
-) {
+function insert_questions(name,tittle,message,footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst) {
   var sql =
     "INSERT INTO questions (name , message , tittle ,footer , op1 , op2 , op3 , op1_q , op2_q , op3_q , user , isfirst ) VALUES ?";
   var values = [
-    [
-      name,
-      message,
-      tittle,
-      footer,
-      op1,
-      op2,
-      op3,
-      op1_q,
-      op2_q,
-      op3_q,
-      user,
-      isfirst,
-    ],
+    [ name, message, tittle, footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst, ],
   ];
   con.query(sql, [values], function (err, result) {
     if (err) throw err;

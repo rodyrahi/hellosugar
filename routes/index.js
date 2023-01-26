@@ -65,12 +65,16 @@ router.get("/enterprise", (req, res) => {
 });
 router.post("/basic", (req, res) => {
     console.log(req.body);
-  const {name , number , mail , business  , city } = req.body;
+  const {name , number , mail , business  , city , cupon } = req.body;
   const type = "basic"
+  var days = 0
+  if (cupon === "fgs100" ) {
+    days = 29
+  }
   var sql =
-    "INSERT INTO client (name , number , mail , business , type , city) VALUES ?";
+    "INSERT INTO client (name , number , mail , business , type , city , days) VALUES ?";
   var values = [
-    [name , number , mail , business , type , city,],
+    [name , number , mail , business , type , city, days],
   ];
   basecon.query(sql, [values], function (err, result) {
     if (err) throw err;

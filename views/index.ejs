@@ -3,292 +3,294 @@
     <%- include('partials/header.ejs') %>
 <body>
     <%- include('partials/navbar.ejs') %>
-       
     <div class="container">
+        <div class="container">
        
     
-        <div class="text-center" style="margin: 5rem auto 5rem auto;">
-
-            <img class="" style="width: 12rem;" src="/sugarface.png" alt=""
-                srcset="">
-            <h1>SUGAR</h1>
-            <h3 class="mb-3 text-uppercase text-light">WhatsApp Automation Tool</h3>
-            <p class="text-white mb-5">Efficiently manage your WhatsApp
-                messages and automate your business communication</p>
-            <a href="#features" class="btn btn-secondary">Features</a>
-            <% if(!isAuthenticated) { %>
-                            
-                <a class="btn btn-primary " aria-current="page" href="#pricing">Sign up</a>
-                <%} else {%>
-                   
-                  <a class="btn btn-primary" aria-current="page" href="#pricing">See Pricing</a>
-                  <%}%>
+            <div class="text-center" style="margin: 5rem auto 5rem auto;">
+    
+                <img class="" style="width: 12rem;" src="/sugarface.png" alt=""
+                    srcset="">
+                <h1>SUGAR</h1>
+                <h3 class="mb-3 text-uppercase text-light">WhatsApp Automation Tool</h3>
+                <p class="text-white mb-5">Efficiently manage your WhatsApp
+                    messages and automate your business communication</p>
+                <a href="#features" class="btn btn-secondary">Features</a>
+                <% if(!isAuthenticated) { %>
+                                
+                    <a class="btn btn-primary " aria-current="page" href="#pricing">Sign up</a>
+                    <%} else {%>
+                       
+                      <a class="btn btn-primary" aria-current="page" href="#pricing">See Pricing</a>
+                      <%}%>
+            </div>
         </div>
-    </div>
-    <div class="container " id="pricing" style="margin: 0rem auto 10rem
-        auto;">
-        <h1 class="text-center" style="margin-bottom: 6rem; ">PRICING <i
-                class="fa-solid fa-arrow-down"></i></h1>
-        <div class="row">
-            <!-- <div class="col-sm-3">
-                <div class="card" style="color: white;">
-                    <div class="card-header">
-                        Basic
-                    </div>
-                    <div class="card-body " style="background-color: darkgrey;">
-                        
-                        <div class=" text-center m-3 ">
-                            <i class="fa-solid fa-car-side" style="font-size: 5rem;"></i>
-                           
+        <div class="container " id="pricing" style="margin: 0rem auto 10rem
+            auto;">
+            <h1 class="text-center" style="margin-bottom: 6rem; ">PRICING <i
+                    class="fa-solid fa-arrow-down"></i></h1>
+            <div class="row">
+                <!-- <div class="col-sm-3">
+                    <div class="card" style="color: white;">
+                        <div class="card-header">
+                            Basic
                         </div>
-                        <h5 class="card-title ">FREE</h5>
-                        <p class=" m-0 " style="font-size: 1.5rem; color: darkcyan;">2 MONTHS</p>
-                        <ul class="list-unstyled mt-3 mb-4" style="">
-                            <li>20 users included <i class="fa-solid fa-check"></i> </li>
-                            <li>10 GB of storage <i class="fa-solid fa-check"></i></li>
-                            <li>Priority email support <i class="fa-solid fa-check"></i></li>
-                            <li>Help center access <i class="fa-solid fa-check"></i></li>
-                          </ul>
-                          <% if(!isAuthenticated) { %>
+                        <div class="card-body " style="background-color: darkgrey;">
                             
-                            <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
-                            <%} else {%>
+                            <div class=" text-center m-3 ">
+                                <i class="fa-solid fa-car-side" style="font-size: 5rem;"></i>
                                
-                                <a class="btn btn-primary" aria-current="page"  href="/basic">Choose</a>
-                          
-                              <%}%>
-                        
+                            </div>
+                            <h5 class="card-title ">FREE</h5>
+                            <p class=" m-0 " style="font-size: 1.5rem; color: darkcyan;">2 MONTHS</p>
+                            <ul class="list-unstyled mt-3 mb-4" style="">
+                                <li>20 users included <i class="fa-solid fa-check"></i> </li>
+                                <li>10 GB of storage <i class="fa-solid fa-check"></i></li>
+                                <li>Priority email support <i class="fa-solid fa-check"></i></li>
+                                <li>Help center access <i class="fa-solid fa-check"></i></li>
+                              </ul>
+                              <% if(!isAuthenticated) { %>
+                                
+                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                                <%} else {%>
+                                   
+                                    <a class="btn btn-primary" aria-current="page"  href="/basic">Choose</a>
+                              
+                                  <%}%>
+                            
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-md-4 justify-content-center d-flex">
+                    <div class="card" style="color: darkcyan; height: fit-content;">
+                        <div class="card-header">
+                            Basic
+                        </div>
+                        <div class="card-body ">
+                            <div class=" text-center m-3 ">
+                                <i class="fa-sharp fa-solid fa-paper-plane"
+                                    style="font-size: 5rem;"></i>
+                            </div>
+    
+                            <div class="" style="display: block ruby;">
+                                <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">₹199</p>
+                                    <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
+    
+                            </div>
+                            <h5 class="card-title ">   ₹99/month</h5>
+                            <ul class="list-unstyled mt-3 mb-4" style="  color: dimgray;">
+                                <li>Limited chats<i class="fa-solid fa-check"></i> </li>
+                                <li>Regular + Button messages <i class="fa-solid fa-check"></i></li>
+                                <li>All media support <i class="fa-solid fa-check"></i></li>
+                                <li>Message Templates<i class="fa-solid fa-check"></i></li>
+                              </ul>
+                              <% if(!isAuthenticated) { %>
+                                
+                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                                <%} else {%>
+                                   
+                                    <a class="btn btn-primary" aria-current="page"  href="/basic">Choose</a>
+                              
+                                  <%}%>
+                            
+                        </div>
                     </div>
                 </div>
-            </div> -->
-            <div class="col-md-4 justify-content-center d-flex">
-                <div class="card" style="color: darkcyan; height: fit-content;">
-                    <div class="card-header">
-                        Basic
+                <div class="col-md-4 justify-content-center d-flex">
+                    <div class="card" style="color: black;height: fit-content;
+                        background-color: gold;
+                        box-shadow: none;
+                        outline: dashed;
+                        outline-offset: 0.2rem;
+                        outline-color: antiquewhite;
+                        ">
+                        <div class="card-header">
+                            Pro(Recommended)
+                        </div>
+                        <div class="card-body">
+                            <div class=" text-center m-3 ">
+    
+                                <i class="fa-sharp fa-solid fa-plane"
+                                    style="font-size: 5rem; "></i>
+    
+                            </div>
+                            <div class="" style="display: block ruby;">
+                                <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">₹699 </p>
+                                    <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
+    
+                            </div>
+                            <h5 class="card-title">₹399/month</h5>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Unlimited Messages  <i class="fa-solid fa-check"></i> </li>
+                                <li>All type of Messages <i class="fa-solid fa-check"></i></li>
+                                <li>All meadia support + files <i class="fa-solid fa-check"></i></li>
+                                <li>Some Whatsapp Tools <i class="fa-solid fa-check"></i></li>
+                                <li>Speacial Admin Features <i class="fa-solid fa-check"></i></li>
+                                <li>Help Center Access <i class="fa-solid fa-check"></i></li>
+                              </ul>
+                        
+            
+                              <% if(!isAuthenticated) { %>
+                                
+                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                                <%} else {%>
+                                 
+                                  <a class="btn btn-primary" aria-current="page" href="/pro">Choose</a>
+                                  <%}%>
+                        </div>
                     </div>
-                    <div class="card-body ">
-                        <div class=" text-center m-3 ">
-                            <i class="fa-sharp fa-solid fa-paper-plane"
-                                style="font-size: 5rem;"></i>
-                        </div>
-
-                        <div class="" style="display: block ruby;">
-                            <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">₹199</p>
+                </div>
+                <div class="col-md-4 justify-content-center d-flex">
+                    <div class="card"style="color: gold;background-color: rgb(0, 0, 0);height: fit-content;">
+                        <div class="card-header">Enterprise</div>
+                        <div class="card-body">
+                            <div class=" text-center m-3 ">
+                                <i class="fa-sharp fa-solid fa-rocket"style="font-size: 5rem;"></i>
+                            </div>
+                            <div class="" style="display: block ruby;">
+                                <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">₹1,999 </p>
                                 <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
-
+                            </div>
+                            <h5 class="card-title">   ₹999/month</h5>
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Unlimited Messages <i class="fa-solid fa-check"></i> </li>
+                                <li>All type of Messages <i class="fa-solid fa-check"></i></li>
+                                <li>All meadia support + files <i class="fa-solid fa-check"></i></li>
+                                <li>Speacial admin Features <i class="fa-solid fa-check"></i></li>
+                                <li>Help center access <i class="fa-solid fa-check"></i></li>
+                                <li>No Code Platform <i class="fa-solid fa-check"></i></li>
+                                <li>Fully Customizable Bot <i class="fa-solid fa-check"></i></li>
+                                <li>Many Whatsapp tools <i class="fa-solid fa-check"></i></li>
+                                
+                              </ul>
+                              <% if(!isAuthenticated) { %>
+                                
+                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                                <%} else {%>
+                                  
+                                    <a class="btn btn-primary" aria-current="page" href="/enterprise">Choose</a>
+                                  
+                                  <%}%>
                         </div>
-                        <h5 class="card-title ">   ₹99/month</h5>
-                        <ul class="list-unstyled mt-3 mb-4" style="  color: dimgray;">
-                            <li>Limited chats<i class="fa-solid fa-check"></i> </li>
-                            <li>Regular + Button messages <i class="fa-solid fa-check"></i></li>
-                            <li>All media support <i class="fa-solid fa-check"></i></li>
-                            <li>Message Templates<i class="fa-solid fa-check"></i></li>
-                          </ul>
-                          <% if(!isAuthenticated) { %>
-                            
-                            <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
-                            <%} else {%>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mb-5" id="features" >
+            <h1 class="text-center" style="margin-bottom: 2rem; ">FEATURES <i class="fa-solid fa-arrow-down"></i></h1>
+            <div class="row"> 
+                <div class="col-md-4 justify-content-center d-flex">
+                    <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
+                        <div class="card-header text-light">Unlimited Conversations</div>
+                        <div class="card-body text-dark">
+                            <div class="text-center">
+                                <i class="fa-solid fa-infinity" style="font-size: 5rem; color: cornflowerblue;"></i>
+                                <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
+                            </div>
+            
+                            <div class="">
+                                <p class="card-text ">With over 2B active users, it is the most convenient and comfortable channel to
+                                    reach a use. Connect and start conversation with the maximum numbers of users in same budget.</p>
+                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 justify-content-center d-flex">
+                    <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
+                        <div class="card-header text-light">Generate qualified Leads</div>
+                        <div class="card-body text-dark">
+                            <div class="text-center">
+                                <i class="fas fa-star" style="font-size: 5rem; color: gold;"></i>
+                                <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
+                            </div>
+            
+                            <div class="">
+                                <p class="card-text ">Proactively reach out to prospects by engaging them in a conversation 
+                                    on WhatsApp. Get answers to simple questions like budget, authority, need and timeline and 
+                                    generate qualified leads.</p>
+                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 justify-content-center d-flex">
+                    <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
+                        <div class="card-header text-light">Human Touch Chatbot Management</div>
+                        <div class="card-body text-dark">
+                            <div class="text-center">
+                                <i class="fas fa-user-cog" style="font-size: 5rem; color: darkslateblue;"></i>
+                                <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
+                            </div>
+            
+                            <div class="">
+                                <p class="card-text ">Have a birds eye view of all the conversation being handled by the chatbot in real-time. Manually take a human handover of 
+                                    conversations which you think would need a personal touch.</p>
+                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"> 
+                <div class="col-md-4 justify-content-center d-flex">
+                    <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
+                        <div class="card-header text-light">24/7 Availability</div>
+                        <div class="card-body text-dark">
+                            <div class="text-center">
+                                <i class="fas fa-headset" style="font-size: 5rem; color: black;"></i>
+                                <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
+                            </div>
+            
+                            <div class="">
+                                <p class="card-text ">Your chatbots work round the clock in serving any and all 
+                                    queries that your current and future customers may bring forth.</p>
+                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 justify-content-center d-flex">
+                    <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
+                        <div class="card-header text-light">Rich Media Support</div>
+                        <div class="card-body text-dark">
+                            <div class="text-center">
+                                <i class="fas fa-images" style="font-size: 5rem; color: cadetblue;"></i>
                                
-                                <a class="btn btn-primary" aria-current="page"  href="/basic">Choose</a>
-                          
-                              <%}%>
-                        
+                                <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
+                            </div>
+            
+                            <div class="">
+                                <p class="card-text ">Bring your conversation intuitive by making use of images, gifs, videos, pdfs and what not. </p>
+                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 justify-content-center d-flex">
+                    <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
+                        <div class="card-header text-light">Personal Server</div>
+                        <div class="card-body text-dark">
+                            <div class="text-center">
+                                <i class="fas fa-server" style="font-size: 5rem; color: coral;"></i>
+                            
+                                <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
+                            </div>
+            
+                            <div class="">
+                                <p class="card-text ">Host your Chatbot on personal Server and enjoy flexibility, 
+                                    high end security and data backup.</p>
+                
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 justify-content-center d-flex">
-                <div class="card" style="color: black;height: fit-content;
-                    background-color: gold;
-                    box-shadow: none;
-                    outline: dashed;
-                    outline-offset: 0.2rem;
-                    outline-color: antiquewhite;
-                    ">
-                    <div class="card-header">
-                        Pro(Recommended)
-                    </div>
-                    <div class="card-body">
-                        <div class=" text-center m-3 ">
-
-                            <i class="fa-sharp fa-solid fa-plane"
-                                style="font-size: 5rem; "></i>
-
-                        </div>
-                        <div class="" style="display: block ruby;">
-                            <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">₹699 </p>
-                                <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
-
-                        </div>
-                        <h5 class="card-title">₹399/month</h5>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Unlimited Messages  <i class="fa-solid fa-check"></i> </li>
-                            <li>All type of Messages <i class="fa-solid fa-check"></i></li>
-                            <li>All meadia support + files <i class="fa-solid fa-check"></i></li>
-                            <li>Some Whatsapp Tools <i class="fa-solid fa-check"></i></li>
-                            <li>Speacial Admin Features <i class="fa-solid fa-check"></i></li>
-                            <li>Help Center Access <i class="fa-solid fa-check"></i></li>
-                          </ul>
-                    
-        
-                          <% if(!isAuthenticated) { %>
-                            
-                            <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
-                            <%} else {%>
-                             
-                              <a class="btn btn-primary" aria-current="page" href="/pro">Choose</a>
-                              <%}%>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 justify-content-center d-flex">
-                <div class="card"style="color: gold;background-color: rgb(0, 0, 0);height: fit-content;">
-                    <div class="card-header">Enterprise</div>
-                    <div class="card-body">
-                        <div class=" text-center m-3 ">
-                            <i class="fa-sharp fa-solid fa-rocket"style="font-size: 5rem;"></i>
-                        </div>
-                        <div class="" style="display: block ruby;">
-                            <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">₹1,999 </p>
-                            <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
-                        </div>
-                        <h5 class="card-title">   ₹999/month</h5>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Unlimited Messages <i class="fa-solid fa-check"></i> </li>
-                            <li>All type of Messages <i class="fa-solid fa-check"></i></li>
-                            <li>All meadia support + files <i class="fa-solid fa-check"></i></li>
-                            <li>Speacial admin Features <i class="fa-solid fa-check"></i></li>
-                            <li>Help center access <i class="fa-solid fa-check"></i></li>
-                            <li>No Code Platform <i class="fa-solid fa-check"></i></li>
-                            <li>Fully Customizable Bot <i class="fa-solid fa-check"></i></li>
-                            <li>Many Whatsapp tools <i class="fa-solid fa-check"></i></li>
-                            
-                          </ul>
-                          <% if(!isAuthenticated) { %>
-                            
-                            <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
-                            <%} else {%>
-                              
-                                <a class="btn btn-primary" aria-current="page" href="/enterprise">Choose</a>
-                              
-                              <%}%>
-                    </div>
-                </div>
-            </div>
+            
+            
         </div>
     </div>
-    <div class="container mb-5" id="features" >
-        <h1 class="text-center" style="margin-bottom: 2rem; ">FEATURES <i class="fa-solid fa-arrow-down"></i></h1>
-        <div class="row"> 
-            <div class="col-md-4 justify-content-center d-flex">
-                <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
-                    <div class="card-header text-light">Unlimited Conversations</div>
-                    <div class="card-body text-dark">
-                        <div class="text-center">
-                            <i class="fa-solid fa-infinity" style="font-size: 5rem; color: cornflowerblue;"></i>
-                            <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
-                        </div>
-        
-                        <div class="">
-                            <p class="card-text ">With over 2B active users, it is the most convenient and comfortable channel to
-                                reach a use. Connect and start conversation with the maximum numbers of users in same budget.</p>
-            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 justify-content-center d-flex">
-                <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
-                    <div class="card-header text-light">Generate qualified Leads</div>
-                    <div class="card-body text-dark">
-                        <div class="text-center">
-                            <i class="fas fa-star" style="font-size: 5rem; color: gold;"></i>
-                            <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
-                        </div>
-        
-                        <div class="">
-                            <p class="card-text ">Proactively reach out to prospects by engaging them in a conversation 
-                                on WhatsApp. Get answers to simple questions like budget, authority, need and timeline and 
-                                generate qualified leads.</p>
-            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 justify-content-center d-flex">
-                <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
-                    <div class="card-header text-light">Human Touch Chatbot Management</div>
-                    <div class="card-body text-dark">
-                        <div class="text-center">
-                            <i class="fas fa-user-cog" style="font-size: 5rem; color: darkslateblue;"></i>
-                            <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
-                        </div>
-        
-                        <div class="">
-                            <p class="card-text ">Have a birds eye view of all the conversation being handled by the chatbot in real-time. Manually take a human handover of 
-                                conversations which you think would need a personal touch.</p>
-            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row"> 
-            <div class="col-md-4 justify-content-center d-flex">
-                <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
-                    <div class="card-header text-light">24/7 Availability</div>
-                    <div class="card-body text-dark">
-                        <div class="text-center">
-                            <i class="fas fa-headset" style="font-size: 5rem; color: black;"></i>
-                            <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
-                        </div>
-        
-                        <div class="">
-                            <p class="card-text ">Your chatbots work round the clock in serving any and all 
-                                queries that your current and future customers may bring forth.</p>
-            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 justify-content-center d-flex">
-                <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
-                    <div class="card-header text-light">Rich Media Support</div>
-                    <div class="card-body text-dark">
-                        <div class="text-center">
-                            <i class="fas fa-images" style="font-size: 5rem; color: cadetblue;"></i>
-                           
-                            <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
-                        </div>
-        
-                        <div class="">
-                            <p class="card-text ">Bring your conversation intuitive by making use of images, gifs, videos, pdfs and what not. </p>
-            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 justify-content-center d-flex">
-                <div class="card border-dark mb-3" style="max-width: 18rem; height: fit-content;">
-                    <div class="card-header text-light">Personal Server</div>
-                    <div class="card-body text-dark">
-                        <div class="text-center">
-                            <i class="fas fa-server" style="font-size: 5rem; color: coral;"></i>
-                        
-                            <!-- <h5 class="card-title">Rajvendra Rahi </h5> -->
-                        </div>
-        
-                        <div class="">
-                            <p class="card-text ">Host your Chatbot on personal Server and enjoy flexibility, 
-                                high end security and data backup.</p>
-            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
+ 
 
 
 

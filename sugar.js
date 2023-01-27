@@ -33,7 +33,7 @@ require("dotenv").config();
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: 'a long, randomly-generated string stored in env',
+  secret: 'yftyfukyiyt8oy6d7tsdkfiyrfiutdyikyifr8uyfi87fto8yfo8y6fo8',
   baseURL: 'https://hellosugar.io',
   clientID: '5Lf1VdLyRpW1mdomZAJbjps1Io05Ith9',
   issuerBaseURL: 'https://dev-t42orpastoaad3st.us.auth0.com',

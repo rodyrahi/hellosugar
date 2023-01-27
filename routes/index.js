@@ -71,6 +71,9 @@ router.post("/basic", (req, res) => {
   if (cupon === "fgs100" ) {
     days = 29
   }
+  else{
+    console.log(cupon);
+  }
   var sql =
     "INSERT INTO client (name , number , mail , business , type , city , days) VALUES ?";
   var values = [
@@ -89,12 +92,19 @@ router.post("/basic", (req, res) => {
 });
 router.post("/pro", (req, res) => {
   console.log(req.body);
-const {name , number , mail , business  , city } = req.body;
+
+const {name , number , mail , business  , city , cupon } = req.body;
 const type = "pro"
+if (cupon === "fgs100" ) {
+  days = 29
+}
+else{
+  console.log(cupon);
+}
 var sql =
-  "INSERT INTO client (name , number , mail , business , type , city) VALUES ?";
+  "INSERT INTO client (name , number , mail , business , type , city , days) VALUES ?";
 var values = [
-  [name , number , mail , business , type , city,],
+  [name , number , mail , business , type , city, days],
 ];
 basecon.query(sql, [values], function (err, result) {
   if (err) throw err;
@@ -106,14 +116,23 @@ res.render('registered' , {
   isAuthenticated : req.oidc.isAuthenticated()
  })
 });
+
+
 router.post("/enterprise", (req, res) => {
   console.log(req.body);
-const {name , number , mail , business  , city } = req.body;
+const {name , number , mail , business  , city , cupon } = req.body;
 var type = "enterprise"
+if (cupon === "fgs100" ) {
+  days = 29
+}
+else{
+  console.log(cupon);
+}
+
 var sql =
-  "INSERT INTO client (name , number , mail , business , type , city) VALUES ?";
+  "INSERT INTO client (name , number , mail , business , type , city , days) VALUES ?";
 var values = [
-  [name , number , mail , business , type , city,],
+  [name , number , mail , business , type , city, days],
 ];
 basecon.query(sql, [values], function (err, result) {
   if (err) throw err;

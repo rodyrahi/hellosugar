@@ -41,7 +41,7 @@
                   </div>
                   <div class="form-group mb-3">
                   
-                    <input type="tel" is-valid class="form-control"  id="business" name="business" placeholder="Business" required>
+                    <input type="text" is-valid class="form-control"  id="business" name="business" placeholder="Business" required>
                   </div>
                   <div class="form-group mb-3 d-flex">
                    
@@ -76,6 +76,7 @@
             document.getElementById("cupon").classList.add("border-success");
             document.getElementById("cupon").classList.remove("border-danger");
             document.getElementById("icon").classList.remove("d-none");
+            console.log(input);
 
           }
           else{
@@ -83,6 +84,7 @@
             document.getElementById("cupon").classList.add("border-danger");
             document.getElementById("cupon").classList.remove("border-success");
             document.getElementById("icon").classList.add("d-none");
+            console.log(input);
 
           }
           

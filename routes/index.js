@@ -68,8 +68,8 @@ router.post("/basic", (req, res) => {
   const {name , number , mail , business  , city , cupon } = req.body;
   const type = "basic"
   var days = 0
-  cupon = cupon.toUpperCase()
-  if (cupon === "FGS100" ) {
+
+  if (cupon.toUpperCase() === "FGS100" ) {
     days = 29
   }
   else{
@@ -97,8 +97,8 @@ router.post("/pro", (req, res) => {
 const {name , number , mail , business  , city , cupon } = req.body;
 const type = "pro"
 var days = 0
-cupon = cupon.toUpperCase()
-if (cupon === "FGS100" ) {
+
+if (cupon.toUpperCase() === "FGS100" ) {
   days = 29
 }
 else{
@@ -126,8 +126,8 @@ router.post("/enterprise", (req, res) => {
 const {name , number , mail , business  , city , cupon } = req.body;
 var type = "enterprise"
 var days = 0
-cupon = cupon.toUpperCase()
-if (cupon === "FGS100" ) {
+
+if (cupon.toUpperCase() === "FGS100" ) {
   days = 29
 }
 else{

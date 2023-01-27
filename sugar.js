@@ -29,13 +29,14 @@ require("dotenv").config();
 
 
 
+
 const config = {
   authRequired: false,
   auth0Logout: true,
-  issuerBaseURL: "https://dev-t42orpastoaad3st.us.auth0.com",
-  baseURL: "https://hellosugar.io",
-  clientID: "ANiivrMdUypgq5BXfD8ZJKnh6X77h24J",
-  secret: "Puhad4aP5X69qHcBADGbCbxPUND_n2TjR2mfeIGnuYM85CvVd-4iH8xCMyk8ayR3",
+  secret: 'a long, randomly-generated string stored in env',
+  baseURL: 'https://hellosugar.io',
+  clientID: '5Lf1VdLyRpW1mdomZAJbjps1Io05Ith9',
+  issuerBaseURL: 'https://dev-t42orpastoaad3st.us.auth0.com',
   idpLogout: true,
 };
 app.set('socketio', io);

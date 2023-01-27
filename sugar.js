@@ -32,10 +32,10 @@ require("dotenv").config();
 const config = {
   authRequired: false,
   auth0Logout: true,
-  issuerBaseURL: process.env.ISSUER,
-  baseURL: process.env.BASEURL,
-  clientID: process.env.CLIENTID,
-  secret: process.env.SECRET,
+  issuerBaseURL: "https://dev-t42orpastoaad3st.us.auth0.com",
+  baseURL: "https://hellosugar.io",
+  clientID: "ANiivrMdUypgq5BXfD8ZJKnh6X77h24J",
+  secret: "Puhad4aP5X69qHcBADGbCbxPUND_n2TjR2mfeIGnuYM85CvVd-4iH8xCMyk8ayR3",
   idpLogout: true,
 };
 app.set('socketio', io);

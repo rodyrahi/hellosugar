@@ -9,6 +9,7 @@
 <body>
     <%- include('partials/navbar.ejs') %>
     <div class="container">
+      
         <div class="container">
        
     
@@ -30,7 +31,32 @@
                       <%}%>
             </div>
         </div>
-        <div class="container " id="pricing" style="margin: 0rem auto 6rem
+        <div class="container">
+            <div class="row bg-light p-4" style="border-radius: 1rem;">
+                <div class="col-md-6 tittle">
+                    <h2 class="text-dark " style="font-size: 3rem;">
+                        World’s Leading 
+                    </h2>
+                    <h2 class="text-success" style="font-size: 3rem;" >
+                        Conversational
+                    </h2>
+                    <h2 class="text-dark " style="font-size: 3rem; margin-bottom: 2rem;">
+                        Messaging Platform for commerce, marketing and support
+                    </h2>
+                    <h2 class="text-muted mb-5">
+
+                        Explore how WhatsApp can drive your sales revenue this festive season
+                        Drive up your brand's engagement and sales with WhatsApp's Quality Based Messaging 
+                    </h2>
+                        
+                </div>
+
+                <div class="col-md-6 " style="text-align:right ;">
+                    <img src="phone.png" width="400" alt="" srcset="">
+                </div>
+            </div>
+        </div>
+        <div class="container " id="pricing" style="margin: 6rem auto 6rem
             auto;">
             <h1 class="text-center" style="margin-bottom: 6rem; ">PRICING <i
                     class="fa-solid fa-arrow-down"></i></h1>
@@ -183,8 +209,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="container  mb-5" id="features">
             <h1 class="text-center" style="margin-bottom: 2rem; ">FEATURES <i class="fa-solid fa-arrow-down"></i></h1>
 
@@ -243,7 +267,13 @@
         </div>
     </div>
    
-    
+  <style>
+        @media screen and (max-width: 600px) {
+    div.tittle {
+        font-size: 0.5rem;
+    }
+    }
+  </style>
 </body>
 <%- include('partials/footer.ejs') %>
 </html>

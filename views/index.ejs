@@ -8,9 +8,9 @@
 </head>
 <body>
     <%- include('partials/navbar.ejs') %>
-    <div class="container">
+    <div class="container ">
       
-        <div class="container">
+        <!-- <div class="container">
        
     
             <div class="text-center" style="margin: 5rem auto 5rem auto;">
@@ -30,189 +30,171 @@
                       <a class="btn btn-primary" aria-current="page" href="#pricing">See Pricing</a>
                       <%}%>
             </div>
-        </div>
-        <div class="container d-block">
-            <div class="row bg-light p-4 " style="border-radius: 1rem;">
-                <div class="col-md-6 tittle">
-                    <h2 class="text-dark " style="font-size: 3rem;">
-                       Leading platform for
+        </div> -->
+        <div class="container my-5 d-block">
+            <div class="row bg-light p-4 shadow" style="border-radius: 1rem;">
+                <div class="col-md-6  mb-4">
+                    <!-- <img class="" style="width: 8rem;" src="/sugarface.png" alt=""
+                    srcset=""> -->
+                <!-- <h1 >SUGAR</h1>
+                <h3 class="mb-3 text-uppercase text-dark">WhatsApp Automation Tool</h3> -->
+                    <h2 class="text-dark " style="font-size: 3rem; font-family: rubik , sans-serif;">
+                       Leading Platform For
                     </h2> 
                     <h2 class="text-success" style="font-size: 2.5rem;" >
                         Conversational
                     </h2>
-                    <h2 class="text-dark " style="font-size: 3rem; margin-bottom: 2rem;">
-                        Messaging Platform for commerce, marketing and support
+                    <h2 class="text-dark " style="font-size: 3rem; margin-bottom: 2rem; font-family: rubik , sans-serif;">
+                        Messaging Platform For Commerce, Marketing And Support
                     </h2>
                     <h4 class="text-muted mb-5">
 
                         Explore how WhatsApp can drive your sales revenue this festive season
                         Drive up your brand's engagement and sales with WhatsApp's Quality Based Messaging 
                     </h4>
-                        
+                    <a href="#features" class="btn btn-secondary">Features</a>
+                    <% if(!isAuthenticated) { %>
+                                    
+                        <a class="btn btn-primary " aria-current="page" href="#pricing">Sign up</a>
+                        <%} else {%>
+                           
+                          <a class="btn btn-primary" aria-current="page" href="#pricing">See Pricing</a>
+                          <%}%>
                 </div>
 
                 <div class="col-md-6 " style="text-align:right ;" >
-                    <img src="phone.png"alt="" srcset="" style="width: 100%; max-width: 25rem;">
+                    <img class="mt-4" src="phone.png"alt="" srcset="" style="width: 100%; max-width: 36rem;">
                 </div>
             </div>
         </div>
-        <div class="container " id="pricing" style="margin: 6rem auto 6rem
-            auto;">
-            <h1 class="text-center" style="margin-bottom: 6rem; ">PRICING <i
-                    class="fa-solid fa-arrow-down"></i></h1>
 
-                
-            <div class="row">
-                <!-- <div class="col-sm-3">
-                    <div class="card" style="color: white;">
-                        <div class="card-header">
-                            Basic
-                        </div>
-                        <div class="card-body " style="background-color: darkgrey;">
-                            
-                            <div class=" text-center m-3 ">
-                                <i class="fa-solid fa-car-side" style="font-size: 5rem;"></i>
-                               
-                            </div>
-                            <h5 class="card-title ">FREE</h5>
-                            <p class=" m-0 " style="font-size: 1.5rem; color: darkcyan;">2 MONTHS</p>
-                            <ul class="list-unstyled mt-3 mb-4" style="">
-                                <li>20 users included <i class="fa-solid fa-check"></i> </li>
-                                <li>10 GB of storage <i class="fa-solid fa-check"></i></li>
-                                <li>Priority email support <i class="fa-solid fa-check"></i></li>
-                                <li>Help center access <i class="fa-solid fa-check"></i></li>
-                              </ul>
-                              <% if(!isAuthenticated) { %>
-                                
-                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
-                                <%} else {%>
-                                   
-                                    <a class="btn btn-primary" aria-current="page"  href="/basic">Choose</a>
-                              
-                                  <%}%>
-                            
-                        </div>
-                    </div>
+        <div class="container my-5  d-block " id="pricing">
+           
+            <div class="row  p-4 justify-content-center " style="border-radius: 1rem;">
+                <h2 class="text-center text-light" style="margin-bottom: 2rem; font-family: rubik , sans-serif; ">PRICING </h2>
+                <!-- <div class=" text-center m-3 ">
+                    <p>Are you tired of feeling lost and overwhelmed when it comes to managing your website? 
+                        Look no further! Our plans offer a variety of features to help you take control of your online 
+                        presence, including customizable templates, easy-to-use analytics, and expert support. 
+                        Don't miss out on the opportunity to improve your website and attract more customers. 
+                        Invest in one of our plans today and see the difference for yourself!</p>
                 </div> -->
-                <div class="col-md-4 justify-content-center d-flex">
-                    <div class="card" style="color: darkcyan; height: fit-content;">
-                        <div class="card-header">
-                            Basic
-                        </div>
-                        <div class="card-body ">
-                            <div class=" text-center m-3 ">
-                                <i class="fa-sharp fa-solid fa-paper-plane"
-                                    style="font-size: 5rem;"></i>
-                            </div>
-    
-                            <!-- <div class="" style="display: block ruby;">
-                                <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">₹199</p>
-                                    <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
-    
-                            </div>
-                            <h5 class="card-title ">   ₹99/month</h5> -->
-                            <ul class="list-unstyled mt-3 mb-4" style="  color: dimgray;">
-                                <li>Limited chats<i class="fa-solid fa-check"></i> </li>
-                                <li>Regular + Button messages <i class="fa-solid fa-check"></i></li>
-                                <li>All media support <i class="fa-solid fa-check"></i></li>
-                                <li>Message Templates<i class="fa-solid fa-check"></i></li>
-                              </ul>
-                              <% if(!isAuthenticated) { %>
-                                
-                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
-                                <%} else {%>
-                                   
-                                    <a class="btn btn-primary" aria-current="page"  href="/basic">Choose</a>
-                              
-                                  <%}%>
-                            
-                        </div>
+                <div class="col-md-3 mt-4 mb-4 bg-secondary mx-2 rounded p-3" style="max-width: 18rem;">
+                    <h3 class="text-light" >Free</h3>
+                    <hr>
+                    <div class=" text-left m-3 ">
+                        <i class="fa-solid fa-car-side" style="font-size: 5rem; color: aliceblue;"></i>
                     </div>
+                    <ul class="list-unstyled mt-3 mb-4" style="color: aliceblue;">
+                        <li>20 users included <i class="fa-solid fa-check"></i> </li>
+                        <li>10 GB of storage <i class="fa-solid fa-check"></i></li>
+                        <li>Priority email support <i class="fa-solid fa-check"></i></li>
+                        <li>Help center access <i class="fa-solid fa-check"></i></li>
+                      </ul>
+                    <h5 class="text-light" >coming soon</h5>
+
                 </div>
-                <div class="col-md-4 justify-content-center d-flex">
-                    <div class="card" style="color: black;height: fit-content;
-                        background-color: gold;
-                        box-shadow: none;
-                        outline: dashed;
-                        outline-offset: 0.2rem;
-                        outline-color: antiquewhite;
-                        ">
-                        <div class="card-header">
-                            Pro(Recommended)
-                        </div>
-                        <div class="card-body">
-                            <div class=" text-center m-3 ">
-    
-                                <i class="fa-sharp fa-solid fa-plane"
-                                    style="font-size: 5rem; "></i>
-    
-                            </div>
-                            <!-- <div class="" style="display: block ruby;">
-                                <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">₹699 </p>
-                                    <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
-    
-                            </div>
-                            <h5 class="card-title">₹399/month</h5> -->
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <li>Unlimited Messages  <i class="fa-solid fa-check"></i> </li>
-                                <li>All type of Messages <i class="fa-solid fa-check"></i></li>
-                                <li>All media support + files <i class="fa-solid fa-check"></i></li>
-                                <li>Some Whatsapp Tools <i class="fa-solid fa-check"></i></li>
-                                <li>Special Admin Features <i class="fa-solid fa-check"></i></li>
-                                <li>Help Center Access <i class="fa-solid fa-check"></i></li>
-                              </ul>
+                <div class="col-md-3 mt-4 mb-4 rounded p-3" style="max-width: 18rem; background-color: darkslateblue;">
+                    <h3 class="text-light" >Basic</h3>
+                    <hr>
+                    <div class=" text-left m-3 ">
+                        <i class="fa-sharp fa-solid fa-paper-plane"
+                            style="font-size: 5rem; color: rgb(255, 255, 255); "></i>
+                    </div>
+                    <ul class="list-unstyled mt-3 mb-4" style="  color: rgb(255, 255, 255);">
+                        <li>Limited chats <i class="fa-solid fa-check"></i> </li>
+                        <li>Regular + Button messages <i class="fa-solid fa-check"></i></li>
+                        <li>All media support <i class="fa-solid fa-check"></i></li>
+                        <li>Message Templates <i class="fa-solid fa-check"></i></li>
+                      </ul>
+                      <% if(!isAuthenticated) { %>
                         
-            
-                              <% if(!isAuthenticated) { %>
-                                
-                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
-                                <%} else {%>
-                                 
-                                  <a class="btn btn-primary" aria-current="page" href="/pro">Choose</a>
-                                  <%}%>
-                        </div>
+                        <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                        <%} else {%>
+                           
+                            <a class="btn btn-primary" aria-current="page"  href="/basic">Choose</a>
+                      
+                          <%}%>
+
+                </div>
+                <div class="col-md-3 mt-4 mb-4 mx-3 shadow  rounded p-3" style="max-width: 18rem; outline: dashed;
+                outline-offset: 0.2rem;
+                outline-color: rgb(255, 255, 255); background-color: gold;">
+                    <h3 class="text-dark" >Pro</h3>
+                    <hr>
+                    <div class=" text-right m-3 ">
+    
+                        <i class="fa-sharp fa-solid fa-plane"
+                            style="font-size: 5rem;  "></i>
+
+                    </div>
+                    <!-- <div class="" style="display: block ruby;">
+                        <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">₹699 </p>
+                            <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
+
+                    </div>
+                    <h5 class="card-title">₹399/month</h5> -->
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Unlimited Messages  <i class="fa-solid fa-check"></i> </li>
+                        <li>All type of Messages <i class="fa-solid fa-check"></i></li>
+                        <li>All media support + files <i class="fa-solid fa-check"></i></li>
+                        <li>Some Whatsapp Tools <i class="fa-solid fa-check"></i></li>
+                        <li>Special Admin Features <i class="fa-solid fa-check"></i></li>
+                        <li>Help Center Access <i class="fa-solid fa-check"></i></li>
+                      </ul>
+                
+    
+                      <% if(!isAuthenticated) { %>
+                        
+                        <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                        <%} else {%>
+                         
+                          <a class="btn btn-primary" aria-current="page" href="/pro">Choose</a>
+                          <%}%>
+
+                </div>
+                <div class="col-md-3 mt-4 mb-4  rounded p-3 " style="max-width: 18rem; background-color: black;">
+                    <h3 class="text-light" >Enterprise</h3>
+                    <hr class="text-light" >
+                    <div class=" text-left m-3 ">
+    
+                        <i class="fa-sharp fa-solid fa-rocket "style="font-size: 5rem; color: gold;"></i>
+                        <ul class="list-unstyled mt-3  mb-4 " style=" color: gold; ">
+                            <li>Unlimited Messages <i class="fa-solid fa-check"></i> </li>
+                            <li>All type of Messages <i class="fa-solid fa-check"></i></li>
+                            <li>All media support + files <i class="fa-solid fa-check"></i></li>
+                            <li>Special admin Features <i class="fa-solid fa-check"></i></li>
+                            <li>Help center access <i class="fa-solid fa-check"></i></li>
+                            <li>No Code Platform <i class="fa-solid fa-check"></i></li>
+                            <li>Fully Customizable Bot <i class="fa-solid fa-check"></i></li>
+                            <li>Many Whatsapp tools <i class="fa-solid fa-check"></i></li>
+                            
+                          </ul>
+                          <% if(!isAuthenticated) { %>
+                            
+                            <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
+                            <%} else {%>
+                              
+                                <a class="btn btn-primary" aria-current="page" href="/enterprise">Choose</a>
+                              
+                              <%}%>
+
                     </div>
                 </div>
-                <div class="col-md-4 justify-content-center d-flex">
-                    <div class="card"style="color: gold;background-color: rgb(0, 0, 0);height: fit-content;">
-                        <div class="card-header">Enterprise</div>
-                        <div class="card-body">
-                            <div class=" text-center m-3 ">
-                                <i class="fa-sharp fa-solid fa-rocket"style="font-size: 5rem;"></i>
-                            </div>
-                            <!-- <div class="" style="display: block ruby;">
-                                <p class="text-muted text-decoration-line-through mb-0  " style="margin-right: 0.2rem;">₹1,999 </p>
-                                <p class=" m-0 " style="font-size: 1.5rem; color: red;">save 50%</p>
-                            </div>
-                            <h5 class="card-title">   ₹999/month</h5> -->
-                            <ul class="list-unstyled mt-3 mb-4">
-                                <li>Unlimited Messages <i class="fa-solid fa-check"></i> </li>
-                                <li>All type of Messages <i class="fa-solid fa-check"></i></li>
-                                <li>All media support + files <i class="fa-solid fa-check"></i></li>
-                                <li>Special admin Features <i class="fa-solid fa-check"></i></li>
-                                <li>Help center access <i class="fa-solid fa-check"></i></li>
-                                <li>No Code Platform <i class="fa-solid fa-check"></i></li>
-                                <li>Fully Customizable Bot <i class="fa-solid fa-check"></i></li>
-                                <li>Many Whatsapp tools <i class="fa-solid fa-check"></i></li>
-                                
-                              </ul>
-                              <% if(!isAuthenticated) { %>
-                                
-                                <a class="btn btn-primary " aria-current="page" href="/login">Sign up</a>
-                                <%} else {%>
-                                  
-                                    <a class="btn btn-primary" aria-current="page" href="/enterprise">Choose</a>
-                                  
-                                  <%}%>
-                        </div>
-                    </div>
-                </div>
+             
+               
             </div>
         </div>
+    
+
+
+
+
         <div class="container  mb-5" id="features">
-            <h1 class="text-center" style="margin-bottom: 2rem; ">FEATURES <i class="fa-solid fa-arrow-down"></i></h1>
 
             <div class="bg-light p-4 pb-0" style="border-radius: 1rem;">
+                <h2 class="text-center text-dark" style="margin-bottom: 2rem; font-family: rubik , sans-serif; ">FEATURES</h2>
+
             <div class="row  text-center">
                 <div class="col-md-4 justify-content-center">
                     <div>

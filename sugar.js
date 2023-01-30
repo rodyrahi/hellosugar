@@ -53,6 +53,7 @@ app.get("/profile", requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));
 });
 
+
 server.listen(5000, () => {
   console.log("server is running on port 5000");
 });

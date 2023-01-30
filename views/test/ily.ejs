@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ily</title>
+    <%- include('../partials/header.ejs') %>
+
+</head>
+<style>
+    h4{
+       font-family:  rubik , sans-serif;
+    }
+</style>
+<body style="background-color: rgb(255, 0, 43);">
+    <div class="container bg-light my-3 " style="border-radius: 1rem; height: 90vh;">
+        <h4>A Message For You</h4>
+        <div class="m-5">
+            
+            <h4 class="text-dark">Hey Sugar ❤️, </h4>
+            <h3>
+                You Are The Most BEAUTYFUL , INTALLIGENT AND THE CUTEST Girl I Have Ever Seen,
+                I WANTED TO TELL YOU THAT ILY TOO MUCH AND I WANT TO LIVE REST OF MY LIFE WITH YOU 
+            </h3>
+            <h5 class="text-secondary" >With Love , Raj ❣️</h5>
+        </div>
+       
+        <button type="button " onclick="showdiv1()" class="btn btn-primary m-0 text-light mt-3 " style="background-color:  rgb(255, 0, 43);;" >Theek hai</button>
+
+    </div>
+    <div class="container bg-light my-3 p-2 d-none " style="border-radius: 1rem; " id="div1">
+  
+            <h4 class="text-dark ">Do You ily me ?</h4>
+            <div class="text-end">
+            <button type="button " onclick="showdiv2()" class="btn btn-primary m-0 text-light ms-4  " style="background-color:  rgb(255, 0, 43); height: fit-content;" >ily2</button>
+            
+            <button h type="button " class="btn btn-primary m-0 text-light ms-4 disabled " style="background-color:  rgb(82, 82, 82);" >nahi</button>
+            <p class="mb-0 text-secondary"> ye koi option nahi hai</p>
+            </div>
+
+    </div>
+    <div class="container bg-light my-3 p-2 d-none " style="border-radius: 1rem; " id="div2">
+  
+        <h4 class="text-dark ">How Much?</h4>
+        <div class="text-center">
+            <label for="customRange2" class="form-label">isko slide karo 👇 </label>
+            <div class="d-flex">
+         
+            <h4 class="text-dark me-4">zero</h4>
+            <input type="range" onchange="change()" class="form-range" min="0" max="100" id="Range" value="50" style="">
+            <h4 class="text-dark ms-4" >infinite</h4>
+                   
+        </div>
+        <p class="mb-0  text-secondary" id="text"> bas itna sa ?</p>
+        </div>
+
+    </div>
+
+    <script>
+         var value = 0;
+
+
+        function showdiv2() {
+            document.getElementById("div2").classList.remove("d-none")
+            document.getElementById("div1").classList.add("d-none")
+        }
+        function showdiv1() {
+            document.getElementById("div1").classList.remove("d-none")
+        }
+        function change() {
+            value = document.getElementById("Range").value
+            console.log(value);
+      
+
+       
+
+        if ( value <= 10 ) {
+            console.log(document.getElementById("Range").value);
+            document.getElementById("text").innerHTML ="itna kam ? 😔😔"
+        }
+       else if (value <= 50 ) {
+            console.log(document.getElementById("Range").value);
+            document.getElementById("text").innerHTML ="bas itna sa ? 😒😒"
+        }
+        else if (value <= 70 ) {
+            console.log(document.getElementById("Range").value);
+            document.getElementById("text").innerHTML ="  fir bhi kam hai  🥺🥺"
+        }
+        else if (value <= 90 ) {
+            console.log(document.getElementById("Range").value);
+            document.getElementById("text").innerHTML ="  thoda or chahiye 😍😍"
+        }
+        else{
+            console.log(document.getElementById("Range").value);
+            document.getElementById("text").innerHTML ="❤️❤️❤️❤️❤️"
+        }
+        
+        }  
+    </script>
+
+</body>
+</html>

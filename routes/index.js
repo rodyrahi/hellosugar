@@ -151,6 +151,8 @@ res.render('registered' , {
 });
 
 
-
+router.get("/ily", (req, res) => {
+  res.render('test/ily');
+});
 
 module.exports = router

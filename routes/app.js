@@ -15,6 +15,8 @@ var user = "";
 //============================================================================================================
 
 const { Client, LocalAuth, MessageMedia, Buttons , List} = require("whatsapp-web.js");
+
+
 const client = new Client({
   restartOnAuthFail: true,
   puppeteer: {
@@ -32,9 +34,9 @@ const client = new Client({
     ],
   },
   authStrategy: new LocalAuth(),
+  clientId: user
 });
 
-client.initialize();
 
 if (io instanceof require("socket.io")) {
   console.log("io is an instance of socket.io");
@@ -117,6 +119,10 @@ router.get("/", (req, res) => {
   user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
   console.log(user);
 
+  
+  
+  client.initialize();
+
   var io = req.app.get("socketio");
 
   io.on("connect", function (io) {
@@ -166,15 +172,6 @@ router.get("/", (req, res) => {
     }
   );
 });
-// router.post("/", (req, res) => {
-//   var io = req.app.get("socketio");
-//   io.on("connect", function () {
-//     console.log("Connected to WS server");
-//     io.emit("qr", "test2");
-//   });
-// });
-
-//==================================================================================================================
 
 function setlast_question(q) {
   const sql = `UPDATE client SET lastq = ? WHERE name = '${user}'`;
@@ -398,4 +395,9 @@ function insert_questions(name,tittle,message,footer,op1,op2,op3, op1_q,op2_q, o
     console.log("Number of records inserted: " + result.affectedRows);
   });
 }
+
+
+
+
+
 (module.exports = router), client;

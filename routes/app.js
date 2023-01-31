@@ -159,9 +159,7 @@ router.get("/", (req, res) => {
         data: result,
         user: JSON.stringify(req.oidc.user["nickname"], null, 2).replace(
           /"/g,
-          ""
-
-        ),
+          ""),
         isAuthenticated : req.oidc.isAuthenticated()
 
       });

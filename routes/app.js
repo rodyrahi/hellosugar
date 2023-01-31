@@ -1,6 +1,8 @@
 var con = require("../apidatabase.js");
 const express = require("express");
 var router = express.Router();
+const qrcode = require('qrcode');
+
 const http = require("http");
 var socketIO = require("socket.io");
 var app = express();
@@ -127,7 +129,12 @@ router.get("/", (req, res) => {
     client.on("qr", (qr) => {
       
       console.log("QR RECEIVED", qr);
-      io.emit("qrcode", qr);
+
+      qrcode.toDataURL(qr, (err, url) => {
+        io.emit('qrcode', { src: url });
+        
+      });
+      // io.emit("qrcode", qr);
     });
 
     client.on("ready", () => {
@@ -153,7 +160,10 @@ router.get("/", (req, res) => {
         user: JSON.stringify(req.oidc.user["nickname"], null, 2).replace(
           /"/g,
           ""
+
         ),
+        isAuthenticated : req.oidc.isAuthenticated()
+
       });
     }
   );

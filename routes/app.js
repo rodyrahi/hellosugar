@@ -11,7 +11,7 @@ var io = socketIO(server);
 var bot_ready = false;
 
 var user = "123";
-var gclient
+
 
 //============================================================================================================
 
@@ -97,7 +97,7 @@ router.post("/add", function (req, res) {
 
 router.get("/", (req, res) => {
 
-
+   var is_subscribed = false
   user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
   console.log(user);
   const client = new Client({
@@ -154,14 +154,15 @@ router.get("/", (req, res) => {
       console.log("Client is ready!");
     });
   });
-  // con.query(
-  //   `SELECT name, message FROM questions WHERE user=${user}`,
-  //   function (err, result, fields) {
-  //     res.render("api/api", {
-  //       data: result,
-  //       user: JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
-  //     });
-  //   });
+  con.query(
+    `SELECT days FROM clients WHERE user=${user}`,
+    function (err, result, fields) {
+      console.log(result);
+      if (result > 0) {
+        is_subscribed = true
+      }
+
+    });
   con.query(
     "SELECT name, message FROM questions WHERE user=?",
     [user],
@@ -171,7 +172,9 @@ router.get("/", (req, res) => {
         user: JSON.stringify(req.oidc.user["nickname"], null, 2).replace(
           /"/g,
           ""),
-        isAuthenticated : req.oidc.isAuthenticated()
+        isAuthenticated : req.oidc.isAuthenticated(),
+        is_subscribed : is_subscribed
+
 
       });
     }

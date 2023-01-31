@@ -17,19 +17,61 @@ var bot_ready = false
 
 // module.exports = { router, io, client };
 router.get("/", (req, res) => {
-    console.log(req.oidc.isAuthenticated())
+  var is_subscribed = false
+ 
     if (req.oidc.isAuthenticated()) {
+      var user  = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
+
+
+      con.query(
+        `SELECT days FROM client WHERE name="${user}"`,
+        function (err, result, fields) {
+
+          console.log(result);
+          if (result[0] === undefined) {
+            
+            con.query( `INSERT  INTO client (name , days , lastq) VALUES ("${user}" , 0 , "none")` , function (err, result) {
+              if (err) throw err;
+              console.log(result);
+            })
+            var sql =
+    "INSERT INTO questions (name , message , tittle ,footer , op1 , op2 , op3 , op1_q , op2_q , op3_q , user , isfirst , type ) VALUES ?";
+  var values = [
+    [ "q1", "hey im  sugar", "Title Here", "Footer","op1","op2","op3", "q1","q2", "q3",user,"yes", "none"],
+  ];
+            con.query( sql, [values] , function (err, result) {
+              if (err) throw err;
+              console.log(result);
+            })
+          } 
+          else 
+          {
+            if (parseInt(result[0]["days"]) > 0) {
+              is_subscribed = true
+            }
+          }
+          
+           
+          
+        
+         
+    
+        
+        console.log(is_subscribed);
       res.render("index", { 
-        title: "My Express App" ,
-         user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-        isAuthenticated : req.oidc.isAuthenticated()
+          title: "My Express App" ,
+          user : user,
+          isAuthenticated : req.oidc.isAuthenticated(),
+          is_subscribed: is_subscribed
+          });
     });
     }
     else{
       res.render("index", { 
         title: "My Express App" ,
         //  user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-        isAuthenticated : req.oidc.isAuthenticated()
+        isAuthenticated : req.oidc.isAuthenticated(),
+        is_subscribed: is_subscribed
     });
     }
  

@@ -10,32 +10,14 @@ var server = http.createServer(app);
 var io = socketIO(server);
 var bot_ready = false;
 
-var user = "";
+var user = "123";
+var gclient
 
 //============================================================================================================
 
 const { Client, LocalAuth, MessageMedia, Buttons , List} = require("whatsapp-web.js");
 
 
-const client = new Client({
-  restartOnAuthFail: true,
-  puppeteer: {
-    headless: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--disable-accelerated-2d-canvas",
-      "--no-first-run",
-      "--no-zygote",
-      "--single-process", // <- this one doesn't works in Windows
-      "--disable-gpu",
-      "--use-gl=egl",
-    ],
-  },
-  authStrategy: new LocalAuth(),
-  clientId: user
-});
 
 
 if (io instanceof require("socket.io")) {
@@ -118,6 +100,29 @@ router.get("/", (req, res) => {
 
   user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
   console.log(user);
+  const client = new Client({
+    restartOnAuthFail: true,
+    puppeteer: {
+      headless: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-accelerated-2d-canvas",
+        "--no-first-run",
+        "--no-zygote",
+        "--single-process", // <- this one doesn't works in Windows
+        "--disable-gpu",
+        "--use-gl=egl",
+      ],
+    },
+    authStrategy: new LocalAuth({
+      clientId: user
+    })
+   
+  });
+ 
+  console.log(user);
 
   
   
@@ -171,7 +176,92 @@ router.get("/", (req, res) => {
       });
     }
   );
+  client.on("message", async (msg) => {
+    console.log("MESSAGE RECEIVED", msg.body);
+    let found_question = false;
+    var sql = `SELECT* FROM questions WHERE user='${user}'`;
+  
+    con.query(sql, function (err, results) {
+      if (err) throw err;
+      results.forEach((element) => {
+        if (element["op1"] === msg.body) {
+          found_question = true;
+          send_message(element["op1_q"], msg);
+          return true;
+        } else if (element["op2"] === msg.body) {
+          found_question = true;
+          send_message(element["op2_q"], msg);
+          return true;
+        } else if (element["op3"] === msg.body) {
+          found_question = true;
+          send_message(element["op3_q"], msg);
+          return true;
+        } else {
+          // var sql =
+          //   `SELECT lastq FROM client   WHERE name="raj"`;
+          // con.query(sql, (err, result, fields) => {
+          //   if (err) throw err;
+          //   console.log(result[0]["type"]);
+          //   if (result[0]["type"] === "input") {
+          //     console.log("dope");
+          //     found_question = true;
+          //   }
+          //   });
+        }
+      });
+  
+  
+    if (!found_question) {
+      console.log("not found");
+      var sql = `SELECT * FROM questions WHERE user = "${user}" AND isfirst = 'yes'`;
+    
+  
+      con.query(sql, function (err, results) {
+        if (err) {
+          throw err;
+        }
+        console.log(results);
+  
+        if (results[0]["op3"] === "") {
+          let button = new Buttons(
+            results[0]["message"],
+            [{ body: results[0]["op1"] }, { body: results[0]["op2"] }],
+            results[0]["tittle"],
+            results[0]["footer"]
+          );
+          setlast_question(results[0]["name"]);
+          client.sendMessage(msg.from, button);
+          console.log(results[0]["message"]);
+        } else {
+          let button = new Buttons(
+            results[0]["message"],
+            [
+              { body: results[0]["op1"] },
+              { body: results[0]["op2"] },
+              { body: results[0]["op3"] },
+            ],
+            results[0]["tittle"],
+            results[0]["footer"]
+          );
+          setlast_question(results[0]["name"]);
+          client.sendMessage(msg.from, button);
+        }
+      });
+    }
+  });
+  });
+  
+
+
 });
+
+
+
+
+
+
+
+
 
 function setlast_question(q) {
   const sql = `UPDATE client SET lastq = ? WHERE name = '${user}'`;
@@ -309,80 +399,6 @@ async function send_message(q, msg) {
     }
   );
 }
-client.on("message", async (msg) => {
-  console.log("MESSAGE RECEIVED", msg.body);
-  let found_question = false;
-  var sql = `SELECT* FROM questions WHERE user='${user}'`;
-
-  con.query(sql, function (err, results) {
-    if (err) throw err;
-    results.forEach((element) => {
-      if (element["op1"] === msg.body) {
-        found_question = true;
-        send_message(element["op1_q"], msg);
-        return true;
-      } else if (element["op2"] === msg.body) {
-        found_question = true;
-        send_message(element["op2_q"], msg);
-        return true;
-      } else if (element["op3"] === msg.body) {
-        found_question = true;
-        send_message(element["op3_q"], msg);
-        return true;
-      } else {
-        // var sql =
-        //   `SELECT lastq FROM client   WHERE name="raj"`;
-        // con.query(sql, (err, result, fields) => {
-        //   if (err) throw err;
-        //   console.log(result[0]["type"]);
-        //   if (result[0]["type"] === "input") {
-        //     console.log("dope");
-        //     found_question = true;
-        //   }
-        //   });
-      }
-    });
-
-
-  if (!found_question) {
-    console.log("not found");
-    var sql = `SELECT * FROM questions WHERE user = "${user}" AND isfirst = 'yes'`;
-  
-
-    con.query(sql, function (err, results) {
-      if (err) {
-        throw err;
-      }
-      console.log(results);
-
-      if (results[0]["op3"] === "") {
-        let button = new Buttons(
-          results[0]["message"],
-          [{ body: results[0]["op1"] }, { body: results[0]["op2"] }],
-          results[0]["tittle"],
-          results[0]["footer"]
-        );
-        setlast_question(results[0]["name"]);
-        client.sendMessage(msg.from, button);
-        console.log(results[0]["message"]);
-      } else {
-        let button = new Buttons(
-          results[0]["message"],
-          [
-            { body: results[0]["op1"] },
-            { body: results[0]["op2"] },
-            { body: results[0]["op3"] },
-          ],
-          results[0]["tittle"],
-          results[0]["footer"]
-        );
-        setlast_question(results[0]["name"]);
-        client.sendMessage(msg.from, button);
-      }
-    });
-  }
-});
-});
 
 function insert_questions(name,tittle,message,footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst) {
   var sql =
@@ -399,5 +415,4 @@ function insert_questions(name,tittle,message,footer,op1,op2,op3, op1_q,op2_q, o
 
 
 
-
-(module.exports = router), client;
+module.exports = router;

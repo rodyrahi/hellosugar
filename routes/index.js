@@ -1,6 +1,6 @@
 var basecon = require("../database.js");
 var con = require("../apidatabase.js");
-
+const axios = require('axios')
 const { localsName } = require("ejs");
 const express = require("express");
 const http = require("http");
@@ -8,10 +8,17 @@ const app = express();
 var router = express.Router();
 const socketIO = require("socket.io");
 const server = http.createServer(app);
+require("dotenv").config();
 // const port = process.env.PORT || 8000;
 const io = socketIO(server);
 // app.use(express.urlencoded());
+const { Client, LocalAuth, MessageMedia, Buttons , List} = require("whatsapp-web.js");
+const { url } = require("inspector");
+const fetch = require("node-fetch");
+
 var bot_ready = false
+var user = "";
+
 
 
 
@@ -20,9 +27,9 @@ router.get("/", (req, res) => {
   var is_subscribed = false
  
     if (req.oidc.isAuthenticated()) {
-      var user  = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
-
-
+       user  = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
+        
+    
       con.query(
         `SELECT days FROM client WHERE name="${user}"`,
         function (err, result, fields) {
@@ -58,6 +65,7 @@ router.get("/", (req, res) => {
     
         
         console.log(is_subscribed);
+          
       res.render("index", { 
           title: "My Express App" ,
           user : user,
@@ -197,4 +205,11 @@ router.get("/ily", (req, res) => {
   res.render('test/ily');
 });
 
-module.exports = router
+var api =  process.env.BASEURL+"/profile"
+fetch(api)
+  .then((response) => response.json())
+  .then((data) => console.log(data));
+
+
+module.exports = {r: router , user: user };
+

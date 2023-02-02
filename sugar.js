@@ -11,9 +11,7 @@ const io = socketIO(server);
 
 const indexRouter = require("./routes/index.js");
 const dashboardRouter = require("./routes/dashboard.js");
-const { auth, requiresAuth  } = require("express-openid-connect");
-const { Router } = require("express");
-const router = require("./routes/app.js");
+const { auth, requiresAuth } = require("express-openid-connect");
 require("dotenv").config();
 
 // io.on("connection", (socket) => {
@@ -48,10 +46,8 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(auth(config));
 
-app.use("/", indexRouter.r);
+app.use("/", indexRouter);
 app.use("/dashboard", dashboardRouter);
-
-
 
 app.get("/profile", requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));

@@ -17,32 +17,6 @@ var user = "123";
 
 const { Client, LocalAuth, MessageMedia, Buttons , List} = require("whatsapp-web.js");
 
-var client = new Client({
-  restartOnAuthFail: true,
-  puppeteer: {
-    headless: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--disable-accelerated-2d-canvas",
-      "--no-first-run",
-      "--no-zygote",
-      "--single-process", // <- this one doesn't works in Windows
-      "--disable-gpu",
-      "--use-gl=egl",
-    ],
-  },
-  authStrategy: new LocalAuth({
-    clientId: user
-  })
- 
-});
-
-console.log(user);
-
-
-
 
 
 
@@ -110,7 +84,7 @@ router.post("/edit/:name", function (req, res) {
 
 router.post("/add", function (req, res) {
   let data = req.body;
-  insert_questions(data.name,data.question,data.question_title,data.question_footer,data.op1,data.op2,data.op3,data.op1_q,data.op2_q, data.op3_q,user,data.isfirst
+  insert_questions(data.name,data.question,data.question_title,data.question_footer,data.op1,data.op2,data.op3,data.op1_q,data.op2_q, data.op3_q,user,data.isfirst,data.type
   );
   console.log("this is runing"+data);
   res.redirect("/dashboard/"+user);
@@ -121,7 +95,7 @@ router.get("/", (req, res) => {
    var is_subscribed = false
   user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
   console.log(user);
-  client = new Client({
+  const client = new Client({
     restartOnAuthFail: true,
     puppeteer: {
       headless: true,
@@ -142,7 +116,13 @@ router.get("/", (req, res) => {
     })
    
   });
+ 
+  console.log(user);
+
+  
+  
   client.initialize();
+
   var io = req.app.get("socketio");
 
   io.on("connect", function (io) {
@@ -188,94 +168,94 @@ router.get("/", (req, res) => {
           /"/g,
           ""),
         isAuthenticated : req.oidc.isAuthenticated(),
-        is_subscribed : is_subscribed
+        is_subscribed : is_subscribed,
 
 
       });
     }
   );
-
-
-
-});
-
-
-
-
-client.on("message", async (msg) => {
-  console.log("MESSAGE RECEIVED", msg.body);
-  let found_question = false;
-  var sql = `SELECT* FROM questions WHERE user='${user}'`;
-
-  con.query(sql, function (err, results) {
-    if (err) throw err;
-    results.forEach((element) => {
-      if (element["op1"] === msg.body) {
-        found_question = true;
-        send_message(element["op1_q"], msg);
-        return true;
-      } else if (element["op2"] === msg.body) {
-        found_question = true;
-        send_message(element["op2_q"], msg);
-        return true;
-      } else if (element["op3"] === msg.body) {
-        found_question = true;
-        send_message(element["op3_q"], msg);
-        return true;
-      } else {
-        // var sql =
-        //   `SELECT lastq FROM client   WHERE name="raj"`;
-        // con.query(sql, (err, result, fields) => {
-        //   if (err) throw err;
-        //   console.log(result[0]["type"]);
-        //   if (result[0]["type"] === "input") {
-        //     console.log("dope");
-        //     found_question = true;
-        //   }
-        //   });
-      }
-    });
-
-
-  if (!found_question) {
-    console.log("not found");
-    var sql = `SELECT * FROM questions WHERE user = "${user}" AND isfirst = 'yes'`;
+  client.on("message", async (msg) => {
+    console.log("MESSAGE RECEIVED", msg.body);
+    let found_question = false;
+    var sql = `SELECT* FROM questions WHERE user='${user}'`;
+  
+    con.query(sql, function (err, results) {
+      if (err) throw err;
+      results.forEach((element) => {
+        if (element["op1"] === msg.body) {
+          found_question = true;
+          send_message(element["op1_q"], msg);
+          return true;
+        } else if (element["op2"] === msg.body) {
+          found_question = true;
+          send_message(element["op2_q"], msg);
+          return true;
+        } else if (element["op3"] === msg.body) {
+          found_question = true;
+          send_message(element["op3_q"], msg);
+          return true;
+        } else {
+          // var sql =
+          //   `SELECT lastq FROM client   WHERE name="raj"`;
+          // con.query(sql, (err, result, fields) => {
+          //   if (err) throw err;
+          //   console.log(result[0]["type"]);
+          //   if (result[0]["type"] === "input") {
+          //     console.log("dope");
+          //     found_question = true;
+          //   }
+          //   });
+        }
+      });
+  
+  
+    if (!found_question) {
+      console.log("not found");
+      var sql = `SELECT * FROM questions WHERE user = "${user}" AND isfirst = 'yes'`;
+    
+  
+      con.query(sql, function (err, results) {
+        if (err) {
+          throw err;
+        }
+        console.log(results);
+  
+        if (results[0]["op3"] === "") {
+          let button = new Buttons(
+            results[0]["message"],
+            [{ body: results[0]["op1"] }, { body: results[0]["op2"] }],
+            results[0]["tittle"],
+            results[0]["footer"]
+          );
+          setlast_question(results[0]["name"]);
+          client.sendMessage(msg.from, button);
+          console.log(results[0]["message"]);
+        } else {
+          let button = new Buttons(
+            results[0]["message"],
+            [
+              { body: results[0]["op1"] },
+              { body: results[0]["op2"] },
+              { body: results[0]["op3"] },
+            ],
+            results[0]["tittle"],
+            results[0]["footer"]
+          );
+          setlast_question(results[0]["name"]);
+          client.sendMessage(msg.from, button);
+        }
+      });
+    }
+  });
+  });
   
 
-    con.query(sql, function (err, results) {
-      if (err) {
-        throw err;
-      }
-      console.log(results);
 
-      if (results[0]["op3"] === "") {
-        let button = new Buttons(
-          results[0]["message"],
-          [{ body: results[0]["op1"] }, { body: results[0]["op2"] }],
-          results[0]["tittle"],
-          results[0]["footer"]
-        );
-        setlast_question(results[0]["name"]);
-        client.sendMessage(msg.from, button);
-        console.log(results[0]["message"]);
-      } else {
-        let button = new Buttons(
-          results[0]["message"],
-          [
-            { body: results[0]["op1"] },
-            { body: results[0]["op2"] },
-            { body: results[0]["op3"] },
-          ],
-          results[0]["tittle"],
-          results[0]["footer"]
-        );
-        setlast_question(results[0]["name"]);
-        client.sendMessage(msg.from, button);
-      }
-    });
-  }
 });
-});
+
+
+
+
 
 
 
@@ -418,11 +398,11 @@ async function send_message(q, msg) {
   );
 }
 
-function insert_questions(name,tittle,message,footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst) {
+function insert_questions(name,tittle,message,footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst ,type) {
   var sql =
-    "INSERT INTO questions (name , message , tittle ,footer , op1 , op2 , op3 , op1_q , op2_q , op3_q , user , isfirst ) VALUES ?";
+    "INSERT INTO questions (name , message , tittle ,footer , op1 , op2 , op3 , op1_q , op2_q , op3_q , user , isfirst , type ) VALUES ?";
   var values = [
-    [ name, message, tittle, footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst, ],
+    [ name, message, tittle, footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst,type ],
   ];
   con.query(sql, [values], function (err, result) {
     if (err) throw err;

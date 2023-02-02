@@ -1,36 +1,28 @@
 var basecon = require("../database.js");
 var con = require("../apidatabase.js");
-var request = require("request");
+
+const { localsName } = require("ejs");
 const express = require("express");
 const http = require("http");
 const app = express();
 var router = express.Router();
 const socketIO = require("socket.io");
 const server = http.createServer(app);
-require("dotenv").config();
-const { auth, requiresAuth } = require("express-openid-connect");
-const ManagementClient = require('auth0').ManagementClient;
-const fetch = require('node-fetch')
 // const port = process.env.PORT || 8000;
-
-
+const io = socketIO(server);
 // app.use(express.urlencoded());
-const { Client, LocalAuth, MessageMedia, Buttons , List} = require("whatsapp-web.js");
-const { json } = require("express");
-
-
 var bot_ready = false
-var user ="" ;
-var requests;
+
 
 
 // module.exports = { router, io, client };
 router.get("/", (req, res) => {
-    console.log(req.oidc.isAuthenticated())
+  var is_subscribed = false
+ 
     if (req.oidc.isAuthenticated()) {
-<<<<<<< HEAD
-       user  = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
-       module.exports = { user: user}
+      var user  = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
+
+
       con.query(
         `SELECT days FROM client WHERE name="${user}"`,
         function (err, result, fields) {
@@ -66,20 +58,20 @@ router.get("/", (req, res) => {
     
         
         console.log(is_subscribed);
-          
-=======
->>>>>>> parent of 6a59153 (broo killling it)
       res.render("index", { 
-        title: "My Express App" ,
-         user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-        isAuthenticated : req.oidc.isAuthenticated()
+          title: "My Express App" ,
+          user : user,
+          isAuthenticated : req.oidc.isAuthenticated(),
+          is_subscribed: is_subscribed
+          });
     });
     }
     else{
       res.render("index", { 
         title: "My Express App" ,
         //  user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-        isAuthenticated : req.oidc.isAuthenticated()
+        isAuthenticated : req.oidc.isAuthenticated(),
+        is_subscribed: is_subscribed
     });
     }
  
@@ -205,46 +197,4 @@ router.get("/ily", (req, res) => {
   res.render('test/ily');
 });
 
-// var api = "https://hellosugar.io/profile"
-
-// try {
-//   fetch(api)
-//   .then((response) => console.log( response))
- 
-
-// } catch (error) {
-//   console.log(error);
-// }
-
-// const auth0 = new ManagementClient({
-//   domain: 'dev-t42orpastoaad3st.us.auth0.com',
-//   clientId: '5Lf1VdLyRpW1mdomZAJbjps1Io05Ith9',
-//   clientSecret:'dSuIY3gFsoMGn5ZVSwTR1a0dO8JVjS4Msg3hND8ZI-3I4inNwW7pFB_AZi2_mLcE',
-//   scope: 'read:users update:users',
-// });
-
-// const GetUserDetails = async userId => {
-//   console.log('userId', userId);
-
-//   auth0
-//     .getUser()
-//     .then(function(users) {
-//       user = users["nickname"]
-//       var userId = users.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-//       console.log(userId);
-//     })
-//     .catch(function(err) {
-//       console.log(err);
-//     });
-// };
-// const userId = 'google-oauth2|104503941770410173437';
-
-// GetUserDetails(userId);
-
-
-
-
-
-
-module.exports = {r: router };
-
+module.exports = router

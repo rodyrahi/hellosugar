@@ -7,8 +7,7 @@ const socketIO = require("socket.io");
 const server = http.createServer(app);
 const io = socketIO(server);
 
-const userRouter = require("../routes/app.js");
-const client = require("../routes/app.js");
+const userRouter = require("../routes/app.js")
 
 
 
@@ -16,10 +15,8 @@ const client = require("../routes/app.js");
 router.use("/:user",userRouter)
 
 
-module.exports = router
 
 
 
-
-
+  module.exports = router
   

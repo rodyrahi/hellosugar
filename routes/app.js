@@ -110,7 +110,7 @@ router.post("/edit/:name", function (req, res) {
 
 router.post("/add", function (req, res) {
   let data = req.body;
-  insert_questions(data.name,data.question,data.question_title,data.question_footer,data.op1,data.op2,data.op3,data.op1_q,data.op2_q, data.op3_q,user,data.isfirst,data.type
+  insert_questions(data.name,data.question,data.question_title,data.question_footer,data.op1,data.op2,data.op3,data.op1_q,data.op2_q, data.op3_q,user,data.isfirst
   );
   console.log("this is runing"+data);
   res.redirect("/dashboard/"+user);
@@ -188,7 +188,7 @@ router.get("/", (req, res) => {
           /"/g,
           ""),
         isAuthenticated : req.oidc.isAuthenticated(),
-        is_subscribed : is_subscribed,
+        is_subscribed : is_subscribed
 
 
       });
@@ -418,11 +418,11 @@ async function send_message(q, msg) {
   );
 }
 
-function insert_questions(name,tittle,message,footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst ,type) {
+function insert_questions(name,tittle,message,footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst) {
   var sql =
-    "INSERT INTO questions (name , message , tittle ,footer , op1 , op2 , op3 , op1_q , op2_q , op3_q , user , isfirst , type ) VALUES ?";
+    "INSERT INTO questions (name , message , tittle ,footer , op1 , op2 , op3 , op1_q , op2_q , op3_q , user , isfirst ) VALUES ?";
   var values = [
-    [ name, message, tittle, footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst,type ],
+    [ name, message, tittle, footer,op1,op2,op3, op1_q,op2_q, op3_q,user,isfirst, ],
   ];
   con.query(sql, [values], function (err, result) {
     if (err) throw err;

@@ -26,9 +26,9 @@ var requests;
 
 // module.exports = { router, io, client };
 router.get("/", (req, res) => {
-  var is_subscribed = false
- 
+    console.log(req.oidc.isAuthenticated())
     if (req.oidc.isAuthenticated()) {
+<<<<<<< HEAD
        user  = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
        module.exports = { user: user}
       con.query(
@@ -67,20 +67,19 @@ router.get("/", (req, res) => {
         
         console.log(is_subscribed);
           
+=======
+>>>>>>> parent of 6a59153 (broo killling it)
       res.render("index", { 
-          title: "My Express App" ,
-          user : user,
-          isAuthenticated : req.oidc.isAuthenticated(),
-          is_subscribed: is_subscribed
-          });
+        title: "My Express App" ,
+         user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
+        isAuthenticated : req.oidc.isAuthenticated()
     });
     }
     else{
       res.render("index", { 
         title: "My Express App" ,
         //  user : JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, ""),
-        isAuthenticated : req.oidc.isAuthenticated(),
-        is_subscribed: is_subscribed
+        isAuthenticated : req.oidc.isAuthenticated()
     });
     }
  

@@ -83,7 +83,7 @@
 
 
 
-              <form method="POST" action="<%=Object.values(data[0])[1] %>/add">
+              <form method="POST" action="/add">
                 <div class="m-3">
                   <div class="mb-3">
                     <label>isfirst </label>
@@ -113,8 +113,6 @@
                     <input type="text" name="op3" id="op3" class="form-control" />
                     <span class="input-group-text">Question</span>
                     <input type="text" name="op3_q" id="op3_q" class="form-control" />
-                    <span class="input-group-text">Type</span>
-                    <input type="text" name="type" id="type" class="form-control" />
                   </div>
 
 
@@ -126,7 +124,7 @@
             </div>
             <div class="collapse " id="question_collapse">
 
-             
+
             <form method="POST" action="<%=Object.values(data[0])[1] %>/add">
               <div class="m-3">
                 <div class="mb-3">
@@ -160,7 +158,6 @@
                           btn-primary" value="Add" />
               </div>
             </form>
-        
 
             </div>
 

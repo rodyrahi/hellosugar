@@ -11,7 +11,7 @@ const io = socketIO(server);
 
 const indexRouter = require("./routes/index.js");
 const dashboardRouter = require("./routes/dashboard.js");
-const { auth, requiresAuth } = require("express-openid-connect");
+const { auth, requiresAuth  } = require("express-openid-connect");
 const { Router } = require("express");
 const router = require("./routes/app.js");
 require("dotenv").config();

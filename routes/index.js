@@ -1,7 +1,6 @@
 var basecon = require("../database.js");
 var con = require("../apidatabase.js");
-const axios = require('axios')
-const { localsName } = require("ejs");
+var request = require("request");
 const express = require("express");
 const http = require("http");
 const app = express();
@@ -9,17 +8,20 @@ var router = express.Router();
 const socketIO = require("socket.io");
 const server = http.createServer(app);
 require("dotenv").config();
+const { auth, requiresAuth } = require("express-openid-connect");
+const ManagementClient = require('auth0').ManagementClient;
+const fetch = require('node-fetch')
 // const port = process.env.PORT || 8000;
-const io = socketIO(server);
+
+
 // app.use(express.urlencoded());
 const { Client, LocalAuth, MessageMedia, Buttons , List} = require("whatsapp-web.js");
-const { url } = require("inspector");
-const fetch = require("node-fetch");
+const { json } = require("express");
+
 
 var bot_ready = false
-var user = "";
-
-
+var user ="" ;
+var requests;
 
 
 // module.exports = { router, io, client };
@@ -28,8 +30,7 @@ router.get("/", (req, res) => {
  
     if (req.oidc.isAuthenticated()) {
        user  = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "")
-        
-    
+       module.exports = { user: user}
       con.query(
         `SELECT days FROM client WHERE name="${user}"`,
         function (err, result, fields) {
@@ -205,11 +206,46 @@ router.get("/ily", (req, res) => {
   res.render('test/ily');
 });
 
-var api =  process.env.BASEURL+"/profile"
-fetch(api)
-  .then((response) => response.json())
-  .then((data) => console.log(data));
+// var api = "https://hellosugar.io/profile"
+
+// try {
+//   fetch(api)
+//   .then((response) => console.log( response))
+ 
+
+// } catch (error) {
+//   console.log(error);
+// }
+
+// const auth0 = new ManagementClient({
+//   domain: 'dev-t42orpastoaad3st.us.auth0.com',
+//   clientId: '5Lf1VdLyRpW1mdomZAJbjps1Io05Ith9',
+//   clientSecret:'dSuIY3gFsoMGn5ZVSwTR1a0dO8JVjS4Msg3hND8ZI-3I4inNwW7pFB_AZi2_mLcE',
+//   scope: 'read:users update:users',
+// });
+
+// const GetUserDetails = async userId => {
+//   console.log('userId', userId);
+
+//   auth0
+//     .getUser()
+//     .then(function(users) {
+//       user = users["nickname"]
+//       var userId = users.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+//       console.log(userId);
+//     })
+//     .catch(function(err) {
+//       console.log(err);
+//     });
+// };
+// const userId = 'google-oauth2|104503941770410173437';
+
+// GetUserDetails(userId);
 
 
-module.exports = {r: router , user: user };
+
+
+
+
+module.exports = {r: router };
 

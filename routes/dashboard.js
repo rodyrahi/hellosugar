@@ -13,7 +13,7 @@ const client = require("../routes/app.js");
 
 
 
-router.use("/:user",userRouter.router)
+router.use("/:user",userRouter)
 
 
 module.exports = router

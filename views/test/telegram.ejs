@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <%- include('../partials/header.ejs') %>
+
+</head>
+
+<body>
+  <div class="container " style=" height: 100vh; ">
+    <canvas class="qr-canvas " height="250" width="250"></canvas>
+    <form  method="POST" action="telegram/add">
+        <input type="text" id="name" name="name">
+        <button type="submit">submit</button>
+    </form>
+    <p></p>
+  </div>
+
+
+  <script>
+    var myCanvas = document.getElementsByClassName("qr-canvas")[0];
+    var ctx = myCanvas.getContext('2d');
+    var img = new Image;
+
+
+
+    var socket = io();
+
+    socket.on('qrcode', function(data) {
+      console.log(data);
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0); // Or at whatever offset you like
+      };
+
+      img.src = data;
+    });
+  </script>
+</body>
+
+</html>

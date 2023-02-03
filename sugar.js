@@ -11,6 +11,7 @@ const io = socketIO(server);
 
 const indexRouter = require("./routes/index.js");
 const dashboardRouter = require("./routes/dashboard.js");
+const telegramRouter = require("./routes/telegram/telegramapi.js");
 const { auth, requiresAuth } = require("express-openid-connect");
 require("dotenv").config();
 
@@ -48,6 +49,7 @@ app.use(auth(config));
 
 app.use("/", indexRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/telegram", telegramRouter);
 
 app.get("/profile", requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));

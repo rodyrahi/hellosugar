@@ -15,133 +15,100 @@
 
   <%- include('../partials/navbar.ejs') %>
 
+<div class="container">
+  <div class="row bg-light p-1 mt-3 rounded w-100">
+ 
 
-    <div class="row w-100">
-      <div class="col-2 bg-dark " style="height: 100vh;">
-        <button type="button " id="start" onclick="showdiv1()" class="btn btn-primary ms-2   mt-2  "  >Button Message</button>
+    <div class="col-md-2 bg-dark " style="">
+      
+      <button type="button " id="start" onclick="showdiv1()" class="btn btn-primary ms-2   my-2  " style="font-size: 0.6rem;" >Button Message</button>
+      <button type="button " id="start" onclick="showdiv1()" class="btn btn-primary ms-2   mb-2  "  style="font-size: 0.6rem;" >Bulk Message</button>
+
+    </div>
+    <div class="col-md-10 ">
+      <div class="justify-content-center m-3 text-center" id="div1">
+        <h3 id="ready">Connecting </h3>
+
+        <!-- <div class="m-3" id="qrcode"></div> -->
+        <img src="" style="border-radius: 1rem;" alt="QR Code" id="qrcode"  style="max-width: 16rem; max-height: 16rem ; object-fit: scale-down; height: 100%; width: 100%;" >
+
 
       </div>
-      <div class="col-10 ">
-        <div class="justify-content-center m-3 text-center" id="div1">
-          <h3 id="ready">Connecting </h3>
 
-          <!-- <div class="m-3" id="qrcode"></div> -->
-          <img src="" style="border-radius: 1rem;" alt="QR Code" id="qrcode"  style="max-width: 16rem; max-height: 16rem ; object-fit: scale-down; height: 100%; width: 100%;" >
+      <div class="container " id="question">
+        <div class="row">
+          <% if(data) { %>
+
+            <% for(var i=0 ; i <data.length; i++) { %>
+
+
+
+
+              <div class="col-xl-3 col-xxl-3 p-0">
+                <div class="card m-1">
+                  <div class="card-body" style="padding: 0.5rem;">
+                    <p class="card-title">
+                      <%= Object.values(data[i])[0] %>
+                    </p>
+                    <p class="card-text text-truncate" style="font-size: 0.8rem;">
+                      <%= Object.values(data[i])[1] %>
+                    </p>
+                    <a href="<%=user%>/edit/<%= Object.values(data[i])[0]%>" class="card-link">Edit</a>
+                    <a href="#" class="card-link">Delete</a>
+                  </div>
+                </div>
+
+
+
+              </div>
+
+              <% } %>
+                <% } %>
+
+
 
 
         </div>
 
-        <div class="container">
-          <div class="row">
-            <% if(data) { %>
 
-              <% for(var i=0 ; i <data.length; i++) { %>
+        <div class="mt-3">
+
+          <a class="btn btn-light" data-bs-toggle="collapse" href="#button_collapse" role="button"
+            aria-expanded="false" aria-controls="button_collapse">
+            Add button Question
+          </a>
+          <a class="btn btn-light" data-bs-toggle="collapse" href="#question_collapse" role="button"
+            aria-expanded="false" aria-controls="question_collapse">
+            Add a Question
+          </a>
 
 
-
-
-                <div class="col-xl-3 col-xxl-3 p-0">
-                  <div class="card m-1">
-                    <div class="card-body" style="padding: 0.5rem;">
-                      <p class="card-title">
-                        <%= Object.values(data[i])[0] %>
-                      </p>
-                      <p class="card-text text-truncate" style="font-size: 0.8rem;">
-                        <%= Object.values(data[i])[1] %>
-                      </p>
-                      <a href="<%=user%>/edit/<%= Object.values(data[i])[0]%>" class="card-link">Edit</a>
-                      <a href="#" class="card-link">Delete</a>
-                    </div>
-                  </div>
+          <div class="collapse " id="button_collapse">
 
 
 
-                </div>
-
-                <% } %>
-                  <% } %>
-
-
-
-
-          </div>
-
-
-          <div class="mt-3">
-
-            <a class="btn btn-light" data-bs-toggle="collapse" href="#button_collapse" role="button"
-              aria-expanded="false" aria-controls="button_collapse">
-              Add button Question
-            </a>
-            <a class="btn btn-light" data-bs-toggle="collapse" href="#question_collapse" role="button"
-              aria-expanded="false" aria-controls="question_collapse">
-              Add a Question
-            </a>
-
-
-            <div class="collapse " id="button_collapse">
-
-
-
-              <form method="POST" action="<%=Object.values(data[0])[1] %>/add">
-                <div class="m-3">
-                  <div class="mb-3">
-                    <label>isfirst </label>
-                    <input type="text" name="isfirst" id="isfirst" class="form-control" />
-                    <label>Question Name </label>
-                    <input type="text" name="name" id="name" class="form-control" />
-                  </div>
-                  <div class="mb-3">
-                    <label>Message Title</label>
-                    <input type="text" rows="3" name="question_title" id="question_title" class="form-control" />
-                    <label>Message Body</label>
-                    <textarea type="text" rows="3" name="question" id="question" class="form-control"></textarea>
-                    <label>Message Footer</label>
-                    <input type="text" rows="3" name="question_footer" id="question_footer" class="form-control" />
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text">Option 1 :</span>
-                    <input type="text" name="op1" id="op1" class="form-control" />
-                    <span class="input-group-text">Question</span>
-                    <input type="text" name="op1_q" id="op1_q" class="form-control" />
-
-                    <span class="input-group-text">Option 2 :</span>
-                    <input type="text" name="op2" id="op2" class="form-control" />
-                    <span class="input-group-text">Question</span>
-                    <input type="text" name="op2_q" id="op2_q" class="form-control" />
-                    <span class="input-group-text">Option 3 :</span>
-                    <input type="text" name="op3" id="op3" class="form-control" />
-                    <span class="input-group-text">Question</span>
-                    <input type="text" name="op3_q" id="op3_q" class="form-control" />
-                    <span class="input-group-text">Type</span>
-                    <input type="text" name="type" id="type" class="form-control" />
-                  </div>
-
-
-                  <div class="mb-3">
-                    <input type="submit" name="submit_button" class="btn
-                            btn-primary" value="Add" />
-                  </div>
-              </form>
-            </div>
-            <div class="collapse " id="question_collapse">
-
-             
             <form method="POST" action="<%=Object.values(data[0])[1] %>/add">
               <div class="m-3">
                 <div class="mb-3">
+                  <label>isfirst </label>
+                  <input type="text" name="isfirst" id="isfirst" class="form-control" />
                   <label>Question Name </label>
                   <input type="text" name="name" id="name" class="form-control" />
                 </div>
                 <div class="mb-3">
-                  <label>Message</label>
+                  <label>Message Title</label>
+                  <input type="text" rows="3" name="question_title" id="question_title" class="form-control" />
+                  <label>Message Body</label>
                   <textarea type="text" rows="3" name="question" id="question" class="form-control"></textarea>
+                  <label>Message Footer</label>
+                  <input type="text" rows="3" name="question_footer" id="question_footer" class="form-control" />
                 </div>
                 <div class="input-group mb-3">
                   <span class="input-group-text">Option 1 :</span>
                   <input type="text" name="op1" id="op1" class="form-control" />
                   <span class="input-group-text">Question</span>
                   <input type="text" name="op1_q" id="op1_q" class="form-control" />
+
                   <span class="input-group-text">Option 2 :</span>
                   <input type="text" name="op2" id="op2" class="form-control" />
                   <span class="input-group-text">Question</span>
@@ -150,29 +117,72 @@
                   <input type="text" name="op3" id="op3" class="form-control" />
                   <span class="input-group-text">Question</span>
                   <input type="text" name="op3_q" id="op3_q" class="form-control" />
+                  <span class="input-group-text">Type</span>
+                  <input type="text" name="type" id="type" class="form-control" />
                 </div>
-              </div>
 
 
-
-              <div class="mb-3">
-                <input type="submit" name="submit_button" class="btn
+                <div class="mb-3">
+                  <input type="submit" name="submit_button" class="btn
                           btn-primary" value="Add" />
-              </div>
+                </div>
             </form>
-        
+          </div>
+          <div class="collapse " id="question_collapse">
 
+           
+          <form method="POST" action="<%=Object.values(data[0])[1] %>/add">
+            <div class="m-3">
+              <div class="mb-3">
+                <label>Question Name </label>
+                <input type="text" name="name" id="name" class="form-control" />
+              </div>
+              <div class="mb-3">
+                <label>Message</label>
+                <textarea type="text" rows="3" name="question" id="question" class="form-control"></textarea>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">Option 1 :</span>
+                <input type="text" name="op1" id="op1" class="form-control" />
+                <span class="input-group-text">Question</span>
+                <input type="text" name="op1_q" id="op1_q" class="form-control" />
+                <span class="input-group-text">Option 2 :</span>
+                <input type="text" name="op2" id="op2" class="form-control" />
+                <span class="input-group-text">Question</span>
+                <input type="text" name="op2_q" id="op2_q" class="form-control" />
+                <span class="input-group-text">Option 3 :</span>
+                <input type="text" name="op3" id="op3" class="form-control" />
+                <span class="input-group-text">Question</span>
+                <input type="text" name="op3_q" id="op3_q" class="form-control" />
+              </div>
             </div>
 
+
+
+            <div class="mb-3">
+              <input type="submit" name="submit_button" class="btn
+                        btn-primary" value="Add" />
+            </div>
+          </form>
+      
+
           </div>
+
         </div>
       </div>
     </div>
-    </div>
+  </div>
+
+</div>
+
+  
 
     <script>
       var socket = io();
       var code;
+
+
+
       socket.on('qrcode', function (data) {
 
         document.getElementById("qrcode").setAttribute("src", data.src)

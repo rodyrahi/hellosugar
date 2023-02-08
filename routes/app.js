@@ -12,6 +12,7 @@ var bot_ready = false;
 
 var user = "123";
 
+
 //============================================================================================================
 
 const {
@@ -22,15 +23,8 @@ const {
   List,
 } = require("whatsapp-web.js");
 
-var client = new Client({
-  restartOnAuthFail: true,
-  puppeteer: {
-    headless: true, args: [ '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-first-run', '--no-zygote', '--single-process', '--disable-gpu', ],
-  },
-  authStrategy: new LocalAuth({
-    clientId: user,
-  }),
-});
+
+
 
 router.get("/edit/:name", function (req, res, next) {
   console.log(" this is running " + user);
@@ -72,7 +66,7 @@ router.get("/get", function (req, res, next) {
 });
 
 router.post("/edit/:name", function (req, res) {
-  console.log("this");
+
 
   console.log(req.body);
   const {
@@ -98,12 +92,14 @@ router.post("/edit/:name", function (req, res) {
       throw err;
     } else {
       console.log(rows);
+      console.log(" update user is" + user );
       res.redirect("/dashboard/" + user);
     }
   });
 });
 
 router.post("/add", function (req, res) {
+  // user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
   let data = req.body;
   insert_questions(
     data.name,
@@ -126,9 +122,13 @@ router.post("/add", function (req, res) {
 
 router.get("/", (req, res) => {
   var is_subscribed = false;
+  
   user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
+
+
   console.log(user);
-  client = new Client({
+
+ var client = new Client({
     restartOnAuthFail: true,
     puppeteer: {
       headless: true,
@@ -151,9 +151,12 @@ router.get("/", (req, res) => {
 
   console.log(user);
 
-  client.initialize();
+    client.initialize()
+    
+     userready = true 
 
-  var io = req.app.get("socketio");
+  
+
 
   io.on("connect", function (io) {
     console.log("Connected to WS server");
@@ -161,42 +164,44 @@ router.get("/", (req, res) => {
     if (bot_ready) {
       io.emit("ready", "Hii bot is ready");
     }
-
+  
     client.on("qr", (qr) => {
       console.log("QR RECEIVED", qr);
-
+  
       qrcode.toDataURL(qr, (err, url) => {
         io.emit("qrcode", { src: url });
       });
       // io.emit("qrcode", qr);
     });
-
+  
     client.on("ready", () => {
       bot_ready = true;
       io.emit("ready", "Hii bot is ready");
       console.log("Client is ready!");
     });
   });
-
+  
+  
   client.on("message", async (msg) => {
+    console.log("user on message " + user);
     console.log("MESSAGE RECEIVED", msg.body);
     let found_question = false;
     var sql = `SELECT* FROM questions WHERE user='${user}'`;
-
+  
     con.query(sql, function (err, results) {
       if (err) throw err;
       results.forEach((element) => {
         if (element["op1"] === msg.body) {
           found_question = true;
-          send_message(element["op1_q"], msg);
+          send_message(element["op1_q"], msg , client);
           return true;
         } else if (element["op2"] === msg.body) {
           found_question = true;
-          send_message(element["op2_q"], msg);
+          send_message(element["op2_q"], msg , client);
           return true;
         } else if (element["op3"] === msg.body) {
           found_question = true;
-          send_message(element["op3_q"], msg);
+          send_message(element["op3_q"], msg , client);
           return true;
         } else {
           // var sql =
@@ -211,17 +216,17 @@ router.get("/", (req, res) => {
           //   });
         }
       });
-
+  
       if (!found_question) {
         console.log("not found");
         var sql = `SELECT * FROM questions WHERE user = "${user}" AND isfirst = 'yes'`;
-
+  
         con.query(sql, function (err, results) {
           if (err) {
             throw err;
           }
           console.log(results);
-
+  
           if (results[0]["op3"] === "") {
             let button = new Buttons(
               results[0]["message"],
@@ -229,7 +234,7 @@ router.get("/", (req, res) => {
               results[0]["tittle"],
               results[0]["footer"]
             );
-            setlast_question(results[0]["name"]);
+            setlast_question(results[0]["name"] , client);
             client.sendMessage(msg.from, button);
             console.log(results[0]["message"]);
           } else {
@@ -243,13 +248,15 @@ router.get("/", (req, res) => {
               results[0]["tittle"],
               results[0]["footer"]
             );
-            setlast_question(results[0]["name"]);
+            setlast_question(results[0]["name"] , client);
             client.sendMessage(msg.from, button);
           }
         });
       }
     });
   });
+  
+
   con.query(
     `SELECT days FROM clients WHERE user=${user}`,
     function (err, result, fields) {
@@ -276,7 +283,10 @@ router.get("/", (req, res) => {
   );
 });
 
-function setlast_question(q) {
+
+
+
+async function setlast_question(q ) {
   const sql = `UPDATE client SET lastq = ? WHERE name = '${user}'`;
   con.query(sql, [q], (err, result) => {
     if (err) {
@@ -285,7 +295,7 @@ function setlast_question(q) {
     console.log(`last question is: ${q}`);
   });
 }
-function send_buttons(element, msg) {
+async function send_buttons(element, msg , client) {
   console.log("button is send");
   const options = [{ body: element["op1"] }, { body: element["op2"] }];
   if (element["op3"] !== "") {
@@ -300,7 +310,7 @@ function send_buttons(element, msg) {
   setlast_question(element["name"]);
   client.sendMessage(msg.from, button);
 }
-function send_photo_button(element, msg) {
+async function send_photo_button(element, msg , client) {
   // console.log("button is send");
   // const options = [{ body: element["op1"] }, { body: element["op2"] }];
   const media = MessageMedia.fromFilePath(element["tittle"]);
@@ -324,7 +334,7 @@ function send_photo_button(element, msg) {
   client.sendMessage(msg.from, button);
 }
 
-function send_list(element, msg) {
+async function send_list(element, msg , client) {
   console.log(element);
 
   let list = [];
@@ -351,7 +361,7 @@ function send_list(element, msg) {
   );
   client.sendMessage(msg.from, productsList);
 }
-function insert_number_in_db(number, m) {
+async function insert_number_in_db(number, m) {
   var sql = "INSERT INTO input_tb (number , input) VALUES ?";
   var values = [[number, m]];
   con.query(sql, [values], function (err, result) {
@@ -359,7 +369,7 @@ function insert_number_in_db(number, m) {
     console.log("Number of records inserted: " + result.affectedRows);
   });
 }
-async function send_input(element, msg) {
+async function send_input(element, msg , client) {
   client.sendMessage(msg.from, "Please enter the value you want to store:");
 
   client.on("message", async (msg) => {
@@ -368,7 +378,7 @@ async function send_input(element, msg) {
     client.sendMessage(msg.from, " value you stored:" + msg.body);
   });
 }
-async function next_message(q, msg) {
+async function next_message(q, msg , client) {
   con.query(
     `SELECT * FROM questions WHERE name="${q}" AND user='${user}'`,
     async function (err, element, fields) {
@@ -384,7 +394,7 @@ async function next_message(q, msg) {
     }
   );
 }
-async function send_message(q, msg) {
+async function send_message(q, msg , client) {
   con.query(
     `SELECT * FROM questions WHERE name="${q}" AND user='${user}'`,
     async function (err, element, fields) {
@@ -395,21 +405,21 @@ async function send_message(q, msg) {
         console.log(element[0]["op1_q"]);
         next_message(element[0]["op1_q"], msg);
       } else if (element[0]["type"] === "list") {
-        send_list(element[0], msg);
+        send_list(element[0], msg , client);
       } else if (element[0]["type"] === "input") {
         // await msg.reply('pong');
         send_input(element[0], msg);
       } else if (element[0]["type"] === "photo_button") {
         // await msg.reply('pong');
-        send_photo_button(element[0], msg);
+        send_photo_button(element[0], msg , client) ;
       } else {
-        send_buttons(element[0], msg);
+        send_buttons(element[0], msg , client);
       }
     }
   );
 }
 
-function insert_questions(
+async function insert_questions(
   name,
   tittle,
   message,

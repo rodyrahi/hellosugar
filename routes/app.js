@@ -156,7 +156,7 @@ router.get("/", (req, res) => {
      userready = true 
 
   
-
+     var io = req.app.get("socketio");
 
   io.on("connect", function (io) {
     console.log("Connected to WS server");

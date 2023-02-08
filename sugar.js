@@ -49,7 +49,7 @@ app.use(auth(config));
 
 app.use("/", indexRouter);
 app.use("/dashboard", dashboardRouter);
-app.use("/telegram", telegramRouter);
+// app.use("/telegram", telegramRouter);
 
 app.get("/profile", requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));

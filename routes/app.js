@@ -11,7 +11,13 @@ var io = socketIO(server);
 var bot_ready = false;
 
 var user = "123";
-
+const {
+  Client,
+  LocalAuth,
+  MessageMedia,
+  Buttons,
+  List,
+} = require("whatsapp-web.js");
 
 //============================================================================================================
 
@@ -23,119 +29,6 @@ router.use((req, res, next) => {
   next();
 });
 
-
-const {
-  Client,
-  LocalAuth,
-  MessageMedia,
-  Buttons,
-  List,
-} = require("whatsapp-web.js");
-
-var client = new Client({
-  restartOnAuthFail: true,
-  puppeteer: {
-    headless: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--disable-accelerated-2d-canvas",
-      "--no-first-run",
-      "--no-zygote",
-      "--single-process", // <- this one doesn't works in Windows
-      "--disable-gpu",
-      "--use-gl=egl",
-    ],
-  },
-  authStrategy: new LocalAuth({
-    clientId: user,
-  }),
-});
-
-console.log(user);
-
-  client.initialize()
-  
-   userready = true 
-
-
-   
-
-
-client.on("message", async (msg) => {
-  console.log("user on message " + user);
-  console.log("MESSAGE RECEIVED", msg.body);
-  let found_question = false;
-  var sql = `SELECT* FROM questions WHERE user='${user}'`;
-
-  con.query(sql, function (err, results) {
-    if (err) throw err;
-    results.forEach((element) => {
-      if (element["op1"] === msg.body) {
-        found_question = true;
-        send_message(element["op1_q"], msg , client);
-        return true;
-      } else if (element["op2"] === msg.body) {
-        found_question = true;
-        send_message(element["op2_q"], msg , client);
-        return true;
-      } else if (element["op3"] === msg.body) {
-        found_question = true;
-        send_message(element["op3_q"], msg , client);
-        return true;
-      } else {
-        // var sql =
-        //   `SELECT lastq FROM client   WHERE name="raj"`;
-        // con.query(sql, (err, result, fields) => {
-        //   if (err) throw err;
-        //   console.log(result[0]["type"]);
-        //   if (result[0]["type"] === "input") {
-        //     console.log("dope");
-        //     found_question = true;
-        //   }
-        //   });
-      }
-    });
-
-    if (!found_question) {
-      console.log("not found");
-      var sql = `SELECT * FROM questions WHERE user = "${user}" AND isfirst = 'yes'`;
-
-      con.query(sql, function (err, results) {
-        if (err) {
-          throw err;
-        }
-        console.log(results);
-
-        if (results[0]["op3"] === "") {
-          let button = new Buttons(
-            results[0]["message"],
-            [{ body: results[0]["op1"] }, { body: results[0]["op2"] }],
-            results[0]["tittle"],
-            results[0]["footer"]
-          );
-          setlast_question(results[0]["name"] , client);
-          client.sendMessage(msg.from, button);
-          console.log(results[0]["message"]);
-        } else {
-          let button = new Buttons(
-            results[0]["message"],
-            [
-              { body: results[0]["op1"] },
-              { body: results[0]["op2"] },
-              { body: results[0]["op3"] },
-            ],
-            results[0]["tittle"],
-            results[0]["footer"]
-          );
-          setlast_question(results[0]["name"] , client);
-          client.sendMessage(msg.from, button);
-        }
-      });
-    }
-  });
-});
 
 
 
@@ -233,27 +126,140 @@ router.post("/add", function (req, res) {
   res.redirect("/dashboard/" + user);
 });
 
-router.get("/", (req, res) => {
+router.get("/", (req, res , next) => {
   var is_subscribed = false;
-  
   user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
+  req.session.currentuser = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
+  const thisuser =  req.session.currentuser
 
 
+  req.session.connection = "connecting"
+
+  var ready =  req.session.connection
   console.log(user);
   var io = req.app.get("socketio");
 
+  
+  const client = new Client({
+    restartOnAuthFail: true,
+    puppeteer: {
+      headless: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-accelerated-2d-canvas",
+        "--no-first-run",
+        "--no-zygote",
+        "--single-process", // <- this one doesn't works in Windows
+        "--disable-gpu",
+        "--use-gl=egl",
+      ],
+    },
+    authStrategy: new LocalAuth({
+      clientId: thisuser,
+    }),
+    
+  });
+  
+  console.log(user);
+  
+  client.initialize()
+    
+  userready = true 
+  
+  
+     
+  
+  
+  client.on("message", async (msg) => {
+    console.log("user on message " + user);
+    console.log("MESSAGE RECEIVED", msg.body);
+    let found_question = false;
+    var sql = `SELECT* FROM questions WHERE user='${user}'`;
+  
+    con.query(sql, function (err, results) {
+      if (err) throw err;
+      results.forEach((element) => {
+        if (element["op1"] === msg.body) {
+          found_question = true;
+          send_message(element["op1_q"], msg , client);
+          return true;
+        } else if (element["op2"] === msg.body) {
+          found_question = true;
+          send_message(element["op2_q"], msg , client);
+          return true;
+        } else if (element["op3"] === msg.body) {
+          found_question = true;
+          send_message(element["op3_q"], msg , client);
+          return true;
+        } else {
+          // var sql =
+          //   `SELECT lastq FROM client   WHERE name="raj"`;
+          // con.query(sql, (err, result, fields) => {
+          //   if (err) throw err;
+          //   console.log(result[0]["type"]);
+          //   if (result[0]["type"] === "input") {
+          //     console.log("dope");
+          //     found_question = true;
+          //   }
+          //   });
+        }
+      });
+  
+      if (!found_question) {
+        console.log("not found");
+        var sql = `SELECT * FROM questions WHERE user = "${user}" AND isfirst = 'yes'`;
+  
+        con.query(sql, function (err, results) {
+          if (err) {
+            throw err;
+          }
+          console.log(results);
+  
+          if (results[0]["op3"] === "") {
+            let button = new Buttons(
+              results[0]["message"],
+              [{ body: results[0]["op1"] }, { body: results[0]["op2"] }],
+              results[0]["tittle"],
+              results[0]["footer"]
+            );
+            setlast_question(results[0]["name"] , client);
+            client.sendMessage(msg.from, button);
+            console.log(results[0]["message"]);
+          } else {
+            let button = new Buttons(
+              results[0]["message"],
+              [
+                { body: results[0]["op1"] },
+                { body: results[0]["op2"] },
+                { body: results[0]["op3"] },
+              ],
+              results[0]["tittle"],
+              results[0]["footer"]
+            );
+            setlast_question(results[0]["name"] , client);
+            client.sendMessage(msg.from, button);
+          }
+        });
+      }
+    });
+  });
+  
+  
 
   io.on("connect", function (io) {
     console.log("Connected to WS server");
     io.emit("ok", "ok");
-    if (bot_ready) {
-      io.emit("ready", "Hii bot is ready");
-    }
+
   
     client.on("qr", (qr) => {
       console.log("QR RECEIVED", qr);
   
       qrcode.toDataURL(qr, (err, url) => {
+        req.session.connection = "connecting wait a lil"
+      ready =  req.session.connection
+        io.emit("ready", ready);
         io.emit("qrcode", { src: url });
       });
       // io.emit("qrcode", qr);
@@ -261,9 +267,12 @@ router.get("/", (req, res) => {
   
     client.on("ready", () => {
       bot_ready = true;
-      io.emit("ready", "Hii bot is ready");
+      req.session.connection = "We are ready to goooo !"
+      ready =  req.session.connection
+      io.emit("ready", ready);
       console.log("Client is ready!");
     });
+  
   });
 
   con.query(
@@ -290,6 +299,7 @@ router.get("/", (req, res) => {
       });
     }
   );
+ 
 });
 
 

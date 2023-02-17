@@ -8,11 +8,11 @@ const io = socketIO(server);
 
 
 
-
 const indexRouter = require("./routes/index.js");
 const dashboardRouter = require("./routes/dashboard.js");
 const telegramRouter = require("./routes/telegram/telegramapi.js");
 const { auth, requiresAuth } = require("express-openid-connect");
+const session = require("express-session");
 require("dotenv").config();
 
 // io.on("connection", (socket) => {
@@ -46,6 +46,12 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(auth(config));
+app.use(session({
+  secret: 'secret-key',
+  resave: false,
+  saveUninitialized: false
+}))
+
 
 app.use("/", indexRouter);
 app.use("/dashboard", dashboardRouter);

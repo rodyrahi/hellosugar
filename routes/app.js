@@ -105,7 +105,7 @@ router.post("/edit/:name", function (req, res) {
 });
 
 router.post("/add", function (req, res) {
-  // user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
+   user = JSON.stringify(req.oidc.user["nickname"], null, 2).replace(/"/g, "");
   let data = req.body;
   insert_questions(
     data.name,
@@ -173,6 +173,9 @@ router.get("/", (req, res , next) => {
   
   
   client.on("message", async (msg) => {
+    client.pupPage.addScriptTag({ path: require.resolve("@wppconnect/wa-js") });
+    await client.pupPage.waitForFunction(() => window.WPP?.isReady);
+
     console.log("user on message " + user);
     console.log("MESSAGE RECEIVED", msg.body);
     let found_question = false;
@@ -329,7 +332,9 @@ async function send_buttons(element, msg , client) {
   client.sendMessage(msg.from, button);
 }
 async function send_photo_button(element, msg , client) {
-  // console.log("button is send");
+
+
+   console.log(" poto_button is send");
   // const options = [{ body: element["op1"] }, { body: element["op2"] }];
   const media = MessageMedia.fromFilePath(element["tittle"]);
   // if (element["op3"] !== "") {
@@ -349,6 +354,8 @@ async function send_photo_button(element, msg , client) {
     element["footer"]
   );
   setlast_question(element["name"]);
+
+  
   client.sendMessage(msg.from, button);
 }
 

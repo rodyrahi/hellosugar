@@ -184,11 +184,20 @@ router.get("/", (req, res , next) => {
     con.query(sql, function (err, results) {
       if (err) throw err;
       results.forEach((element) => {
-        if (element["op1"] === msg.body) {
-          found_question = true;
-          send_message(element["op1_q"], msg , client);
-          return true;
-        } else if (element["op2"] === msg.body) {
+
+        let listop1 = element["op1"].split(',')
+        let list = element["op1_q"].split(',')
+        for (let index = 0; index < listop1.length; index++) {
+          if (listop1[index] === msg.body) {
+            console.log(list[index]);
+            found_question = true;
+            send_message(list[index].trim(), msg , client);
+          }
+          
+        }
+     
+
+         if (element["op2"] === msg.body) {
           found_question = true;
           send_message(element["op2_q"], msg , client);
           return true;
@@ -335,14 +344,8 @@ async function send_photo_button(element, msg , client) {
 
 
    console.log(" poto_button is send");
-  // const options = [{ body: element["op1"] }, { body: element["op2"] }];
   const media = MessageMedia.fromFilePath(element["tittle"]);
-  // if (element["op3"] !== "") {
-  //   options.push({ body: element["op3"] });
-  // }
-  // const button = new Buttons(
-  //   element["tittle"],options,element["messages"],element["footer"]
-  // );
+
   let button = new Buttons(
     media,
     [

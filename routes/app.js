@@ -389,6 +389,24 @@ async function send_list(element, msg , client) {
   );
   client.sendMessage(msg.from, productsList);
 }
+
+async function send_url(element, msg , client) {
+  let button = new Buttons(
+    "media",
+    [
+      {
+        type: 'web_url',
+        url: 'https://hellosugar.io',
+        title: 'Click Here'
+      }
+    ],
+    element["tittle"],
+    element["footer"]
+  );
+
+  client.sendMessage(msg.from, button);
+}
+
 async function insert_number_in_db(number, m) {
   var sql = "INSERT INTO input_tb (number , input) VALUES ?";
   var values = [[number, m]];
@@ -434,6 +452,8 @@ async function send_message(q, msg , client) {
         next_message(element[0]["op1_q"], msg);
       } else if (element[0]["type"] === "list") {
         send_list(element[0], msg , client);
+      } else if (element[0]["type"] === "url") {
+        send_url(element[0], msg , client);
       } else if (element[0]["type"] === "input") {
         // await msg.reply('pong');
         send_input(element[0], msg);
